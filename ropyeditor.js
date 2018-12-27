@@ -4,19 +4,39 @@ var nextMoveMagic = function (coordinates, callback) {
     var prevX = undefined;
     var prevY = undefined;
 
+    const tests = Object.entries({
+        left: function (x, y) {
+            return y === prevY && x === (prevX - 1);
+        },
+        down: function (x, y) {
+            return x === prevX && y === (prevY + 1);
+        },
+        up: function (x, y) {
+            return x === prevX && y === (prevY - 1);
+        },
+        downRight: function (x, y) {
+            return x === (prevX + 1) && y === (prevY + 1);
+        },
+        downLeft: function (x, y) {
+            return x === (prevX - 1) && y === (prevY + 1);
+        },
+        upRight: function (x, y) {
+            return x === (prevX + 1) && y === (prevY - 1);
+        },
+        upLeft: function (x, y) {
+            return x === (prevX - 1) && y === (prevY - 1);
+        }
+    });
+ 
     return function () {
         var [x, y] = coordinates();
         if (prevX !== undefined) { 
-            if (y === prevY && x === (prevX - 1)) {
-                nextDirection = 'left';
-            } else if (x === prevX) {
-                if (y === (prevY + 1)) {
-                    nextDirection = 'down';
-                } else if (y === (prevY - 1)) {
-                    nextDirection = 'up';
+            nextDirection = 'right';
+            for (const [dir, test] of tests) {
+                if (test(x, y)) {
+                    nextDirection = dir;
+                    break;
                 }
-            } else {
-                nextDirection = 'right';
             }
         }
         prevX = x;
@@ -111,7 +131,23 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         right: moveRight,
         left: moveLeft,
         down: moveDown,
-        up: moveUp
+        up: moveUp,
+        downRight: function () {
+            moveDown();
+            moveRight();
+        },
+        downLeft: function () {
+            moveDown();
+            moveLeft();
+        },
+        upRight: function () {
+            moveUp();
+            moveRight();
+        },
+        upLeft: function () {
+            moveUp();
+            moveLeft();
+        }
     };
 
     var nextMove = nextMoveMagic(function () {
@@ -141,10 +177,10 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         listener.simple_combo(r, setCellFunc(r));        
     }
 
-    listener.simple_combo("right", moveRight);
-    listener.simple_combo("left", moveLeft);
-    listener.simple_combo("down", moveDown);
-    listener.simple_combo("up", moveUp);
+    listener.simple_combo("right", movements.right);
+    listener.simple_combo("left", movements.left);
+    listener.simple_combo("down", movements.down);
+    listener.simple_combo("up", movements.up);
     listener.simple_combo("home", function () {
         moveActiveCell(function () { x = 0 });
     });
