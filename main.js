@@ -17,7 +17,8 @@ var toggleDocumentation = (function() {
     var posElement = document.getElementById('infoCurrentPos');
     var dimElement = document.getElementById('infoDimensions');
     var directionElement = document.getElementById('infoDirection');
-    var editor = ropyEditor(editorElement, posElement, dimElement, directionElement);
+    var modeElement = document.getElementById('infoMode');
+    var editor = ropyEditor(editorElement, posElement, dimElement, directionElement, modeElement);
 
     var openButton = document.getElementById('openButton');
     openButton.onclick = function () { alert('Open not yet implemented'); };

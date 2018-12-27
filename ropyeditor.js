@@ -45,8 +45,11 @@ var nextMoveMagic = function (coordinates, callback) {
     };
 };
 
-ropyEditor = function (containerElement, posElement, dimElement, directionElement) {
+ropyEditor = function (containerElement, posElement, dimElement, directionElement, modeElement) {
     const NBSP = String.fromCharCode(160);
+    //var selectionMode = false;
+    //var selectionStartX = undefined;
+    //var selectionStartY = undefined;
     var x = 0;
     var y = 0;
     var rowElements = [];
@@ -102,9 +105,37 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         posElement.innerHTML = '' + x + ',' + y;
     };
 
+    //var renderSelection = function () {
+    //    if (selectionMode) {
+    //        console.log("Render selection");
+    //        for (var i = selectionStartY; i<=y; i++) {
+    //            for (var j = selectionStartX; j<=x; j++) {
+    //                cells[i][j].className = 'ropyEitorRune ropyEditorRuneSelected'
+    //                //selectionStartX > x ? j-- : j++;
+    //            }
+    //            //selectionStartY > y ? i-- : i++;
+    //        }
+    //    }
+    //};
+
+    //var startSelection = function () {
+    //    selectionMode = true;
+    //    selectionStartX = x;
+    //    selectionStartY = y;
+    //    modeElement.innerHTML = "select";
+    //};
+//
+    //var editorEscape = function () {
+    //    selectionMode = false;
+    //    selectionStartX = undefined;
+    //    selectionStartY = undefined;
+    //    modeElement.innerHTML = "normal";
+    //};
+
     var moveActiveCell = function (fMove) {
         cells[y][x].className = 'ropyEditorRune';
         fMove();
+        //renderSelection();
         renderActiveCell();
     };
 
@@ -237,6 +268,13 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     var listener = new window.keypress.Listener();
 
+    //listener.register_combo({
+    //    keys: "enter", 
+    //    on_keydown: startSelection,
+    //    is_exclusive: true,
+    //    prevent_repeat: true
+    //});
+
     var normalInputRunes = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
         'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -245,7 +283,11 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     ];
     for (let i = 0; i < normalInputRunes.length; i++) {
         const r = normalInputRunes[i];
-        listener.simple_combo(r, setCellFunc(r));        
+        listener.register_combo({
+            keys: r, 
+            on_keydown: setCellFunc(r),
+            is_exclusive: true
+        });        
     }
 
     listener.simple_combo("right", movements.right);
@@ -276,6 +318,8 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     listener.simple_combo("ctrl right", expandRight);
     listener.simple_combo("ctrl down", expandDown);
+
+    //listener.simple_combo("escape", editorEscape);
 
     renderActiveCell();
 
