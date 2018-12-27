@@ -1,4 +1,31 @@
-ropyEditor = function (containerElement, posElement, dimElement) {
+
+var nextMoveMagic = function (coordinates, callback) {
+    var nextDirection = 'right';
+    var prevX = undefined;
+    var prevY = undefined;
+
+    return function () {
+        var [x, y] = coordinates();
+        if (prevX !== undefined) { 
+            if (y === prevY && x === (prevX - 1)) {
+                nextDirection = 'left';
+            } else if (x === prevX) {
+                if (y === (prevY + 1)) {
+                    nextDirection = 'down';
+                } else if (y === (prevY - 1)) {
+                    nextDirection = 'up';
+                }
+            } else {
+                nextDirection = 'right';
+            }
+        }
+        prevX = x;
+        prevY = y;
+        callback(nextDirection);
+    };
+};
+
+ropyEditor = function (containerElement, posElement, dimElement, directionElement) {
     var x = 0;
     var y = 0;
     var rowElements = [];
@@ -108,10 +135,34 @@ ropyEditor = function (containerElement, posElement, dimElement) {
             moveActiveCell(function () { x-- });
     };
 
+    var moveDown = function () {
+        if (cells.length > (y + 1))
+            moveActiveCell(function () { y++ });
+    };
+
+    var moveUp = function () {
+        if (y > 0)
+            moveActiveCell(function () { y-- });
+    };
+
+    var movements = {
+        right: moveRight,
+        left: moveLeft,
+        down: moveDown,
+        up: moveUp
+    };
+
+    var nextMove = nextMoveMagic(function () {
+        return [x, y];
+    }, function (direction) {
+        movements[direction]();
+        infoDirection.innerHTML = direction;
+    });
+
     var setCellFunc = function (rune) {
         return function () {
             cells[y][x].innerHTML = rune; //.childNodes[0].nodeValue = rune;
-            moveRight();
+            nextMove();
         };
     };
 
@@ -130,14 +181,8 @@ ropyEditor = function (containerElement, posElement, dimElement) {
 
     listener.simple_combo("right", moveRight);
     listener.simple_combo("left", moveLeft);
-    listener.simple_combo("down", function () {
-        if (cells.length > (y + 1))
-            moveActiveCell(function () { y++ });
-    });
-    listener.simple_combo("up", function () {
-        if (y > 0)
-            moveActiveCell(function () { y-- });
-    });
+    listener.simple_combo("down", moveDown);
+    listener.simple_combo("up", moveUp);
     listener.simple_combo("home", function () {
         moveActiveCell(function () { x = 0 });
     });
