@@ -282,8 +282,6 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         } else if (e.code == 'Delete') {
             cells[y][x].innerHTML = '\u00A0';
             e.preventDefault();
-        } else if () {
-            
         } else if (specialHandlingKeys.includes(e.key)) {
             setCellFunc(e.key)();
             e.preventDefault();
