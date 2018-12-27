@@ -165,12 +165,16 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         };
     };
 
+    var cellIsEmpty = function (cell) {
+        return cell.innerText == NBSP;
+    }
+
     var crop = function () {
         cells[y][x].className = 'ropyEditorRune';
         
         var removeTopRowsCount = _
             .takeWhile(cells, function (rowCells) {
-                return _.every(rowCells, function (cell) { return cell.innerText == NBSP; });
+                return _.every(rowCells, cellIsEmpty);
             })
             .length;
         removeTopRowsCount = Math.min(removeTopRowsCount, cells.length - 1);
@@ -182,7 +186,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
         var removeBottomRowsCount = _
             .takeRightWhile(cells, function (rowCells) {
-                return _.every(rowCells, function (cell) { return cell.innerText == NBSP; });
+                return _.every(rowCells, cellIsEmpty);
             })
             .length;
         removeBottomRowsCount = Math.min(removeBottomRowsCount, cells.length - 1);
@@ -191,6 +195,40 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             rowElm.parentNode.removeChild(rowElm);
         }
         cells = _.take(cells, cells.length - removeBottomRowsCount);
+
+        var removeLeftColsCount = _
+            .chain(cells)
+            .map(function (rowCells) {
+                return _.takeWhile(rowCells, cellIsEmpty).length;
+            })
+            .min()
+            .value();
+        removeLeftColsCount = Math.min(removeLeftColsCount, cells[0].length - 1);
+        rowElements.forEach(row => {
+            for (let idx = 0; idx < removeLeftColsCount; idx++) {
+                row.removeChild(row.childNodes[0]);
+            }
+        });
+        cells = _.map(cells, function (rowCells) {
+            return _.drop(rowCells, removeLeftColsCount);
+        });
+
+        var removeRightColsCount = _
+            .chain(cells)
+            .map(function (rowCells) {
+                return _.takeRightWhile(rowCells, cellIsEmpty).length;
+            })
+            .min()
+            .value();
+        removeRightColsCount = Math.min(removeRightColsCount, cells[0].length - 1);
+        rowElements.forEach(row => {
+            for (let idx = 0; idx < removeRightColsCount; idx++) {
+                row.removeChild(row.lastChild);
+            }
+        });
+        cells = _.map(cells, function (rowCells) {
+            return _.take(rowCells, rowCells.length - removeRightColsCount);
+        });
 
         x = 0;
         y = 0;
