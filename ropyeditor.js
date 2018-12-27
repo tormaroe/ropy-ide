@@ -30,8 +30,6 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     var y = 0;
     var rowElements = [];
     var cells = [];
-    var selectionStartX = undefined;
-    var selectionStartY = undefined;
 
     var makeCell = function (rune, rowOfCells, rowElement) {
         var cell = document.createElement("span");
@@ -71,38 +69,6 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         makeRow(runes);
     };
 
-    var saveToClipboard = function () {
-
-    };
-
-    var selectionCapture =  function () {
-        if (selectionStartX === undefined) {
-            selectionStartX = x;
-            selectionStartY = y;
-        }
-    };
-
-    var copyCommand = function () {
-
-    };
-
-    var cutCommand = function () {
-
-    };
-
-    var pasteCommand = function () {
-
-    };
-
-    var pasteFromClipboardCommand = function () {
-
-    };
-
-    var loadClipboard = function () {
-        console.log("loadClipboard");
-        console.log(document.execCommand('paste'));
-    };
-
     var runesForRow = new Array(50);
     runesForRow.fill(' ');
     for (let rowIndex = 0; rowIndex <= 15; rowIndex++) {
@@ -119,10 +85,6 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         cells[y][x].className = 'ropyEditorRune';
         fMove();
         renderActiveCell();
-
-        if (selectionStartX !== undefined) {
-            // 
-        }
     };
 
     var moveRight = function () {
@@ -208,17 +170,10 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     listener.simple_combo("ctrl right", expandRight);
     listener.simple_combo("ctrl down", expandDown);
 
-    listener.simple_combo("shift left", selectionCapture());
-    listener.simple_combo("shift right", selectionCapture());
-    listener.simple_combo("shift up", selectionCapture());
-    listener.simple_combo("shift down", selectionCapture());
-
     renderActiveCell();
 
     return {
-        saveToClipboard: saveToClipboard,
         expandRight: expandRight,
-        expandDown: expandDown,
-        loadClipboard: loadClipboard
+        expandDown: expandDown
     };
 };

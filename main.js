@@ -39,6 +39,4 @@ var toggleDocumentation = (function() {
     var directionElement = document.getElementById('infoDirection');
     var editor = ropyEditor(editorElement, posElement, dimElement, directionElement);
 
-    var loadClipboardButton = document.getElementById('loadClipboardButton');
-    loadClipboardButton.onclick = editor.loadClipboard;
 })();
