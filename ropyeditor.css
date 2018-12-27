@@ -1,0 +1,125 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    background-color: #3C3C3C;
+}
+
+#title {
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #CBCB41;
+    margin-left:15px;
+    margin-top:10px;
+}
+
+#topToolBar{
+    position: absolute;
+    top: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #252526;
+}
+
+#documentation {
+    background-color: #3C3C3C;
+    color: #8B8B8B;
+    border: solid 1px #252526;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.9em;
+    margin:0 auto;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    width: 75%;
+    height: 75%;
+    z-index: 1000005;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#centerDivWrapper{
+    width: 99%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#centerDiv {
+    padding: 55px 0;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#editor {
+    background-color:#252526;
+}
+
+.color-orange { color: #D97533; }
+.color-blue { color: #569CD6; }
+.color-yellow { color: #CBCB41; }
+
+.button {
+    border: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: #2D2D2D;
+    color: #8B8B8B;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left:0px;
+    margin-right:1px;
+}
+
+.button:hover {
+    background-color: #383838;
+    color: #D4D4D4;
+}
+
+.button-icon {
+    padding-right:6px;
+}
+
+.source-code {
+    font-family: 'Source Code Pro', monospace;
+}
+
+.ropyEditorRow {
+    margin-bottom:1px;
+}
+
+.ropyEditorRune {
+    font-family: 'Source Code Pro', monospace;
+    color: #D4D4D4;
+    border-right: solid 1px #404040;
+    border-bottom: solid 1px #404040;
+    background-color: #1E1E1E;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.ropyEditorRuneActive {
+    background-color: #DCDCAA !important;
+    color: #1E1E1E;
+}
+.ropyEditorRuneSelected {
+    background-color: #DBDBD0 !important;
+    color: #1E1E1E;
+}
+
+.toolbar-info {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13.3333px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;    
+    background-color: #2D2D2D;
+    color: #8B8B8B;
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="ropyeditor.css">
+  </head>
+  <body>
+
+    <div id="topToolBar">
+        <div style="float: right; margin-top:7px;margin-right:8px;">
+            <button class="button" onclick="toggleDocumentation()"><i class="fa fa-book button-icon color-blue" aria-hidden="true"></i>Help</button>
+            <button class="button" onclick="window.location.href='/presentation.html'"><i class="fa fa-file-powerpoint-o button-icon color-blue" aria-hidden="true"></i>Presentation</button>
+        </div>
+        <span id="title"><i class="fa fa-code button-icon color-yellow" aria-hidden="true"></i>Ropy IDE</span>
+    </div>
+
+    <div id="documentation" style="display: none">
+        <p style="text-align:center;"><strong style="color: #CBCB41;">HELP</strong></p>
+        <p>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <strong style="color: #CBCB41;">ROPY COMMANDS</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">+</th>
+                                <td style="vertical-align: top; width:40%">Add ( n n -- n )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">-</th>
+                                <td style="vertical-align: top; width:40%">Subtract ( n n -- n )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">*</th>
+                                <td style="vertical-align: top; width:40%">Multiply ( n n -- n )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">/</th>
+                                <td style="vertical-align: top; width:40%">Divide ( n n -- n )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">%</th>
+                                <td style="vertical-align: top; width:40%">Modulo ( n n -- n )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">&lt;</th>
+                                <td style="vertical-align: top; width:40%">Swap ( a b -- b a )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">&gt;</th>
+                                <td style="vertical-align: top; width:40%">Duplicate ( a -- a a )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">?</th>
+                                <td style="vertical-align: top; width:40%">Pop ( a -- )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">#</th>
+                                <td style="vertical-align: top; width:40%">Print ( a -- )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">&amp;</th>
+                                <td style="vertical-align: top; width:40%">Join numbers ( a b -- ba )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">!</th>
+                                <td style="vertical-align: top; width:40%">Not ( n -- ? ), 0 is false</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">"</th>
+                                <td style="vertical-align: top; width:40%">Stringify ( sequence -- string )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">[</th>
+                                <td style="vertical-align: top; width:40%">Store in memory ( addr value -- )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">]</th>
+                                <td style="vertical-align: top; width:40%">Load from memory ( addr -- value)</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">:</th>
+                                <td style="vertical-align: top; width:40%">Call procedure ( x y -- )</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow">;</th>
+                                <td style="vertical-align: top; width:40%">Return from proceedure call ( )</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <strong style="color: #CBCB41;">EDITOR COMMANDS</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow"><nobr>Ctrl + right arrow</nobr></th>
+                                <td style="vertical-align: top; width:40%">Expand source area width</td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: top; width:10%" class="color-yellow"><nobr>Ctrl + down arrow</nobr></th>
+                                <td style="vertical-align: top; width:40%">Expand source area height</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            
+        </p>
+    </div>
+
+    <div id="centerDivWrapper">
+        <div id="centerDiv">
+            <div style="margin-bottom:4px;">
+                <div style="float:right;margin-top:8px;">
+                    <span class="toolbar-info" id="infoCurrentPos">0,0</span>
+                    <span class="toolbar-info" id="infoDimensions">dim</span>
+                </div>
+                <button class="button" id="loadClipboardButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open..</button>
+                <button class="button"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save..</button>
+                <button class="button"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run..</button>
+                <button class="button"><i class="fa fa-crop button-icon color-orange" aria-hidden="true"></i>Crop</button>
+                <button class="button"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>
+            </div>
+            <div id="editor"></div>            
+        </div>
+    </div>
+
+    <script src="keypress-2.1.5.min.js"></script>
+    <script src="ropyeditor.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

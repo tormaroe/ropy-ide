@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The ROPY programming language presentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="css/flowtime.css">
+    <link rel="stylesheet" href="css/themes/default.css">
+    <link rel="stylesheet" href="ropyeditor.css">
+</head>
+<body style="margin: 0px">
+    <div class="flowtime">
+        <div class="ft-section">
+            <div class="ft-page" style="text-align:center">
+                <h1>The ROPY Programming Language</h1>
+                <h2 class="source-code">+ - * / &lt; &gt; ? % ! &amp; "</h2>
+            </div>
+            
+            <div class="ft-page">
+                <h2>Hello, world</h2>
+                <pre class="source-code">
+                    |   __+8>____-&lt;3>____+6>__ _________________________
+                    |  |                      |                         |
+                    |  |   __>-&lt;3>__&&>>1__   |  _____   ____  _______  |  __
+                    |  |  |                |  | |  __ \ / __ \|  __ \ \ | / /
+                    |  |  |                |  | | |__) | |  | | |__) \ \_/ / 
+                    |  |  |__>7&lt;-__>3+__"  |  | |  _  /| |  | |  ___/ \   /  
+                    |  |                   |  | | | \ \| |__| | |      | |   
+                    |  |__65*2+____67*2&lt;+__|  | |_|  \_\\____/|_|      |_|   
+                    |                         |                         |
+                    |____001&&________>8+_____|__+ - * / &lt; > ? % ! & "__|
+                </pre>
+            </div>
+            
+            <div class="ft-page">
+                    <h2>Best birthday cake every, by </h2>
+                    <pre class="source-code">
+                                        1
+                            |          ||1      1       +
+                       |   | |         ||&     + |     2|
+                      | |   | |        _|_      5 |   ]||1
+                     | |    _|_        | 2      _|_    1|]
+                     _|_    | |        | 5      5 &lt;    _|_
+                     7 &    | |        | |      1 &    ] 4
+                     | "    | |    ____| |**____| [    1 &lt;
+                     | |___ | |____    | |      | |____| -
+                    _| |    | |                 | |    | |11]-2
+                  __ | |                               | |     3&
+                 _          T O R B J 0 R N                      1
+                 1 *                         .                 * 1
+                 &  *****               3 9  A R !        *****  ]
+                 &       **********             **********       -
+                 1 @   @           *************           @   @ 1
+                 1  @@@ @    @                       @    @ @@@  ]
+                 4       @@@@ @      @       @      @ @@@@       1
+                  _            @@@@@@ @     @ @@@@@@            ]
+                   _                   @@@@@                   8
+                    -**45                                 _&32+
+                         53-&lt;1>-&lt;8_             114]1&&114
+                                   **555+7]1]1&&
+                    </pre>
+                </div>
+        </div>
+        
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>Background</h1>
+                <ul>
+                    <li>Entry into PLT Games December 2012: "Turing tarpit"
+                    <p><i>"Beware of the Turing tar-pit in which everything is possible but nothing of interest is easy."<br> -- Alan Perlis</i></p></li>
+                    <li>Originally implemented in Ruby</li>
+                    <li>Later in Common Lisp, Go, and JavaScript</li>
+                    <li>Stack-based, esoteric, 2D programming language</li>
+                    <li>Inspired by Befunge</li>
+                </ul>
+            </div>
+        </div>
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>Elements of a ROPY program</h1>
+                <ul>
+                    <li>The Grid</li>
+                    <li>The Instruction Pointer</li>
+                    <li>The Stack</li>
+                </ul>
+            </div>
+            <div class="ft-page">
+                <h2>The Grid</h2>
+                
+                <table>
+                    <tr>
+                        <td style="width:50%">
+                            <ul>
+                                <li>2D matrix of characters</li>
+                                <li>Can be of any size</li>
+                                <li>Any cell may contain a program instruction</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <img src="/presentation/grid.png">
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="ft-page">
+                <h2>The Instruction Pointer (IP)</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Movement</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Conditional movement</h2>
+            </div>
+            <div class="ft-page">
+                <h2>The Data Stack</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Pushing numbers onto The Stack</h2>
+            </div>
+        </div>
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>Operations</h1>
+                <ul>
+                    <li>Numerical operations</li>
+                    <li>Boolean operations</li>
+                    <li>Stack operations</li>
+                    <li>String operations</li>
+                    <li>Random Access Memory</li>
+                    <li>Procedure calls</li>
+                </ul>
+            </div>
+            <div class="ft-page">
+                <h2>Numerical operations</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Boolean operations</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Stack operations</h2>
+            </div>
+            <div class="ft-page">
+                <h2>String operations</h2>
+            </div>
+            <div class="ft-page">
+                <h2>Random Access Memory</h2>
+                <ul>
+                    <li><b>[</b> : Store value at memory location <i>( loc val -- )</i></li>
+                    <li><b>]</b> : Load value from memory location <i>( loc -- val )</i></li>
+                    <li>Contributed by @etse (Steffen Hageland)</li>
+                </ul>
+            </div>
+            <div class="ft-page">
+                <h2>Use memory to reverse a stack</h2>
+                <pre class="source-code">
+                        |
+                        |    REVERSING A STACK                   ___]3[&gt;]3___             _&gt;3+1]3]]3__
+                        |     USING MEMORY                      |            |           |            |
+                        |     PUT AND GET                       1   PUT      [           [            [
+                        |                                       +   STACK    &gt;           |   READ     &gt;
+                        |                                       3   INTO     2           |   REVERSE  1
+                        |___Initial_stack_1234567890__          &gt;   MEMORY   -           |   ORDER    -
+                                                      |         [            &gt;           |            &gt;
+                         ___Num_elements_&10__________|         1            1           1            1       STACK IS REVERSED
+                        |                                       @            @           @            @
+                        |__>1&gt;[2&gt;[34[_________________________0@ @?____2]___@ @_?34[___0@ @?____1]___@ @?__________DONE_________
+                </pre>
+            </div>
+            <div class="ft-page">
+                <h2>Procedure calls</h2>
+            </div>
+        </div>
+        
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>ROPY pragmatics</h1>
+                <quote>Pragmatics ... referring to practical aspects of how constructs and features of a language may be used to achieve various objectives.</quote>
+                <ul>
+                    <li>Loops</li>
+                </ul>
+            </div>
+        </div>
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>The ROPY IDE</h1>
+            </div>
+        </div>
+        <div class="ft-section">
+            <div class="ft-page">
+                <h1>The End</h1>
+            </div>
+        </div>
+    </div>
+    <script src="js/flowtime.min.js"></script>
+    <script>
+        Flowtime.showProgress(true);
+    </script>
+</body>
+</html>
