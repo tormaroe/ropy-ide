@@ -191,6 +191,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     var setCellFunc = function (rune) {
         return function () {
+            console.log("Set cell " + rune);
             cells[y][x].innerHTML = rune; //.childNodes[0].nodeValue = rune;
             nextMove();
         };
@@ -266,29 +267,30 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         renderActiveCell();
     };
 
+
+    var specialHandlingKeys = 'abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789!"#¤%&/()=?`,.-;:_\'\\@£$€{[]}*^~|§<>'.split('');
+
+    window.document.body.onkeydown = function (e) {
+        console.log(`KeyDown ${e.key} ${e.code}`);
+        if (e.code == 'Space') {
+            setCellFunc('\u00A0')();
+            e.preventDefault();
+        } else if (e.code == 'Backspace') {
+            moveLeft();
+            cells[y][x].innerHTML = '\u00A0';
+            e.preventDefault();
+        } else if (e.code == 'Delete') {
+            cells[y][x].innerHTML = '\u00A0';
+            e.preventDefault();
+        } else if () {
+            
+        } else if (specialHandlingKeys.includes(e.key)) {
+            setCellFunc(e.key)();
+            e.preventDefault();
+        }
+    };
+
     var listener = new window.keypress.Listener();
-
-    //listener.register_combo({
-    //    keys: "enter", 
-    //    on_keydown: startSelection,
-    //    is_exclusive: true,
-    //    prevent_repeat: true
-    //});
-
-    var normalInputRunes = [
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
-        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '.'
-    ];
-    for (let i = 0; i < normalInputRunes.length; i++) {
-        const r = normalInputRunes[i];
-        listener.register_combo({
-            keys: r, 
-            on_keydown: setCellFunc(r),
-            is_exclusive: true
-        });        
-    }
 
     listener.simple_combo("right", movements.right);
     listener.simple_combo("left", movements.left);
@@ -307,19 +309,8 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         moveActiveCell(function () { y = cells.length - 1 });
     });
 
-    listener.simple_combo("delete", function () {
-        cells[y][x].innerHTML = '\u00A0'; // TODO: Work with selection
-    });
-    listener.simple_combo("backspace", function () {
-        moveLeft();
-        cells[y][x].innerHTML = '\u00A0';
-    });
-    listener.simple_combo("space", setCellFunc('\u00A0'));
-
     listener.simple_combo("ctrl right", expandRight);
     listener.simple_combo("ctrl down", expandDown);
-
-    //listener.simple_combo("escape", editorEscape);
 
     renderActiveCell();
 
