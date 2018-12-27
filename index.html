@@ -126,16 +126,17 @@
                     <span class="toolbar-info" id="infoCurrentPos">0,0</span>
                     <span class="toolbar-info" id="infoDimensions">dim</span>
                 </div>
-                <button class="button" id="loadClipboardButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open..</button>
-                <button class="button"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save..</button>
-                <button class="button"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run..</button>
-                <button class="button"><i class="fa fa-crop button-icon color-orange" aria-hidden="true"></i>Crop</button>
-                <button class="button"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>
+                <button class="button" id="openButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open..</button>
+                <button class="button" id="saveButton"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save..</button>
+                <button class="button" id="runButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run..</button>
+                <button class="button" id="cropButton"><i class="fa fa-crop button-icon color-orange" aria-hidden="true"></i>Crop</button>
+                <button class="button" id="clearButton"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>
             </div>
             <div id="editor"></div>            
         </div>
     </div>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="keypress-2.1.5.min.js"></script>
     <script src="ropyeditor.js"></script>
     <script src="main.js"></script>

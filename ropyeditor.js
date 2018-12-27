@@ -46,6 +46,7 @@ var nextMoveMagic = function (coordinates, callback) {
 };
 
 ropyEditor = function (containerElement, posElement, dimElement, directionElement) {
+    const NBSP = String.fromCharCode(160);
     var x = 0;
     var y = 0;
     var rowElements = [];
@@ -164,6 +165,38 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         };
     };
 
+    var crop = function () {
+        cells[y][x].className = 'ropyEditorRune';
+        
+        var removeTopRowsCount = _
+            .takeWhile(cells, function (rowCells) {
+                return _.every(rowCells, function (cell) { return cell.innerText == NBSP; });
+            })
+            .length;
+        removeTopRowsCount = Math.min(removeTopRowsCount, cells.length - 1);
+        for(var idx=0; idx<removeTopRowsCount; idx++) {
+            var rowElm = rowElements.shift();
+            rowElm.parentNode.removeChild(rowElm);
+        }
+        cells = _.drop(cells, removeTopRowsCount);
+
+        var removeBottomRowsCount = _
+            .takeRightWhile(cells, function (rowCells) {
+                return _.every(rowCells, function (cell) { return cell.innerText == NBSP; });
+            })
+            .length;
+        removeBottomRowsCount = Math.min(removeBottomRowsCount, cells.length - 1);
+        for(var idx=cells.length-1; idx>=cells.length-removeBottomRowsCount; idx--) {
+            var rowElm = rowElements.pop();
+            rowElm.parentNode.removeChild(rowElm);
+        }
+        cells = _.take(cells, cells.length - removeBottomRowsCount);
+
+        x = 0;
+        y = 0;
+        renderActiveCell();
+    };
+
     var listener = new window.keypress.Listener();
 
     var normalInputRunes = [
@@ -210,6 +243,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     return {
         expandRight: expandRight,
-        expandDown: expandDown
+        expandDown: expandDown,
+        crop: crop
     };
 };
