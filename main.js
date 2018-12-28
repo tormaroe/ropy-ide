@@ -50,7 +50,11 @@ var togglePaste = (function(editor) {
     cropButton.onclick = editor.crop;
 
     var clearButton = document.getElementById('clearButton');
-    clearButton.onclick = function () { alert('Clear not yet implemented'); };
+    clearButton.onclick = function () { 
+        if (confirm('Are you sure you want to clear everything?')) {
+            editor.clear();
+        }
+    };
 
     var clipboardText = document.getElementById('clipboardText');
 

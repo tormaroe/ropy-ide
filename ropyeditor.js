@@ -251,6 +251,14 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         return cell.innerText == NBSP;
     }
 
+    var clear = function () {
+        cells.forEach(row => {
+            row.forEach(cell => {
+                cell.innerHTML = NBSP;
+            });
+        });
+    };
+
     var paste = function (source) {
         console.log(source);
         source = _.map(source.split('\n'), function (line) { return line.split(''); });
@@ -433,6 +441,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         expandDown: expandDown,
         crop: crop,
         paste: paste,
+        clear: clear,
         setKeysActive: setKeysActive
     };
 };
