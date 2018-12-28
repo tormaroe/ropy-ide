@@ -45,6 +45,12 @@ var nextMoveMagic = function (coordinates, callback) {
     };
 };
 
+var thunk = function (f) {
+    return function () {
+        f();
+    };
+};
+
 ropyEditor = function (containerElement, posElement, dimElement, directionElement, modeElement) {
     const NBSP = String.fromCharCode(160);
     //var selectionMode = false;
@@ -250,10 +256,10 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         source = _.map(source.split('\n'), function (line) { return line.split(''); });
         
         var missingRowNum = Math.max(0, source.length + y - cells.length);
-        _.times(missingRowNum, expandDown);
+        _.times(missingRowNum, thunk(expandDown));
 
         var missingColNum = Math.max(0, _.max(_.map(source, function (x) { return x.length; })) + x - cells[0].length);
-        _.times(missingColNum, expandRight);
+        _.times(missingColNum, thunk(expandRight));
 
         var xx = x;
         var yy = y;
