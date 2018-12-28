@@ -23,11 +23,12 @@ var toggleDocumentation = makeToggler('documentation');
     var modeElement = document.getElementById('infoMode');
     var editor = ropyEditor(editorElement, posElement, dimElement, directionElement, modeElement);
     
-    var toggleOpen = makeToggler('openDialog');
-    var togglePaste = makeToggler('clipboard', function (visible) {
-        editor.setKeysActive(visible);
-    });
     
+    /*
+     *  >>>   O P E N
+     */
+    var toggleOpen = makeToggler('openDialog');
+
     var programUrlLoader = function (url) {
         return function () {
             toggleOpen();
@@ -59,43 +60,47 @@ var toggleDocumentation = makeToggler('documentation');
     
     var openButton = document.getElementById('openButton');
     openButton.onclick = toggleOpen;
-    //openButton.onclick = function () { 
-    //    alert('Open not yet implemented'); 
-    //    ajaj.get("https://raw.githubusercontent.com/tormaroe/ropy/master/examples/birthday_cake.ropy", function (response) {
-    //        editor.clear();
-    //        editor.crop();
-    //        editor.paste(response.body);
-    //    });
-    //};
+    
+    /*
+     *  >>>   S A V E
+     */
+    document.getElementById('saveButton').onclick = function () { alert('Save not yet implemented'); };
     
     
+    /*
+     *  >>>   R U N
+     */
+    document.getElementById('runButton').onclick = function () { alert('Run not yet implemented'); };
     
-    var saveButton = document.getElementById('saveButton');
-    saveButton.onclick = function () { alert('Save not yet implemented'); };
+    /*
+     *  >>>   C R O P
+     */
+    document.getElementById('cropButton').onclick = editor.crop;
     
-    var pasteButton = document.getElementById('pasteButton');
-    pasteButton.onclick = togglePaste;
-    
-    var runButton = document.getElementById('runButton');
-    runButton.onclick = function () { alert('Run not yet implemented'); };
-    
-    var cropButton = document.getElementById('cropButton');
-    cropButton.onclick = editor.crop;
-    
-    var clearButton = document.getElementById('clearButton');
-    clearButton.onclick = function () { 
+    /*
+     *  >>>   C L E A R
+     */
+    document.getElementById('clearButton').onclick = function () { 
         if (confirm('Are you sure you want to clear everything?')) {
             editor.clear();
         }
     };
     
+    /*
+     *  >>>   P A S T E
+     */
+    var togglePaste = makeToggler('clipboard', function (visible) {
+        editor.setKeysActive(visible);
+    });
+
+    document.getElementById('pasteButton').onclick = togglePaste;
+
     var clipboardText = document.getElementById('clipboardText');
     
     var pasteCancelButton = document.getElementById('pasteCancelButton');
-    pasteCancelButton.onclick = pasteButton.onclick;
+    pasteCancelButton.onclick = togglePaste;
     
-    var pasteOkButton = document.getElementById('pasteOkButton');
-    pasteOkButton.onclick = function () {
+    document.getElementById('pasteOkButton').onclick = function () {
         editor.paste(clipboardText.value);
         pasteCancelButton.onclick();
     };
