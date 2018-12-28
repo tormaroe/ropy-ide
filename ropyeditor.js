@@ -106,11 +106,42 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         makeRow(runes, atRowNumOptional);
     };
 
-    var runesForRow = new Array(50);
-    runesForRow.fill(' ');
-    for (let rowIndex = 0; rowIndex <= 15; rowIndex++) {
-        makeRow(runesForRow);
-    }
+    var cutRow = function () {
+        var rowIndex = y;
+        if (cells.length < 2) return;
+        if (y === 0)
+            movements.down();
+        else
+            movements.up();
+        
+        containerElement.removeChild(rowElements[rowIndex]);
+        cells.splice(rowIndex, 1);
+        rowElements.splice(rowIndex, 1);
+    };
+
+    var cutColumn = function () {
+        var colIndex = x;
+        if (cells[0].length < 2) return;
+        if (x > 0)
+            movements.left();
+
+        for(let i = 0; i < cells.length; i++) {
+            let row = cells[i];
+            let cell = row[colIndex];
+            row.splice(colIndex, 1);
+            rowElements[i].removeChild(cell);
+        }
+
+        renderActiveCell();
+    };
+
+    var initialize = function () {
+        var runesForRow = new Array(50);
+        runesForRow.fill(' ');
+        for (let rowIndex = 0; rowIndex <= 15; rowIndex++) {
+            makeRow(runesForRow);
+        }
+    };
 
     var renderActiveCell = function () {
         cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive'
@@ -309,7 +340,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
         if(!keysActive) return;
 
-        console.log(`KeyDown <${e.key}> <${e.code}>`);
+        //console.log(`KeyDown <${e.key}> <${e.code}>`);
 
         if (e.ctrlKey) {
             if (e.code == 'ArrowRight') {
@@ -331,6 +362,12 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
                 e.preventDefault();
             } else if (e.code == 'Enter') {
                 expandDown(y+1);
+                e.preventDefault();
+            } else if (e.altKey && e.key == 'x') {
+                cutColumn();
+                e.preventDefault();
+            } else if (e.key == 'x') {
+                cutRow();
                 e.preventDefault();
             }
         } else {
@@ -375,6 +412,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         }
     };
 
+    initialize();
     renderActiveCell();
 
     var setKeysActive = function (b) {
