@@ -369,6 +369,9 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             } else if (e.key == 'x') {
                 cutRow();
                 e.preventDefault();
+            } else if (e.key == 'r') {
+                crop();
+                e.preventDefault();
             }
         } else {
             if (e.code == 'ArrowUp') {
