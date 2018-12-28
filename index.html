@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Ropy IDE</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="ropyeditor.css">
-  </head>
-  <body>
-
+</head>
+<body>
+    
     <div id="topToolBar">
         <div style="float: right; margin-top:7px;margin-right:8px;">
             <button class="button" onclick="toggleDocumentation()"><i class="fa fa-book button-icon color-blue" aria-hidden="true"></i>Help</button>
@@ -16,15 +16,21 @@
         </div>
         <span id="title"><i class="fa fa-code button-icon color-yellow" aria-hidden="true"></i>Ropy IDE</span>
     </div>
+    
+    <div id="openDialog" class="modal" style="display: none">
+        <p><strong style="color: #CBCB41;">EXAMPLE PROGRAMS:</strong></p>
+        <p><i>Click to load..</i></p>
+        <ul id="examplePrograms"></ul>
+    </div>
 
-    <div id="clipboard" style="display: none">
+    <div id="clipboard" class="modal" style="display: none">
         <p>Paste your source here anc click OK:</p>
         <textarea id="clipboardText" style="width: 100%; height: 200px;"></textarea>
         <button class="button" id="pasteOkButton">OK</button>
         <button class="button" id="pasteCancelButton">Cancel</button>
     </div>
-
-    <div id="documentation" style="display: none">
+    
+    <div id="documentation" class="modal" style="display: none">
         <p style="text-align:center;"><strong style="color: #CBCB41;">HELP</strong></p>
         <p>
             <table style="width: 100%">
@@ -178,7 +184,7 @@
             
         </p>
     </div>
-
+    
     <div id="centerDivWrapper">
         <div id="centerDiv">
             <div style="margin-bottom:4px;">
@@ -188,19 +194,20 @@
                     <span class="toolbar-info" id="infoDimensions">dim</span>
                     <span class="toolbar-info" id="infoMode">normal</span>
                 </div>
-                <button class="button" id="openButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open..</button>
-                <button class="button" id="saveButton"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save..</button>
-                <button class="button" id="pasteButton"><i class="fa fa-clipboard button-icon color-blue" aria-hidden="true"></i>Paste..</button>
-                <button class="button" id="runButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run..</button>
-                <button class="button" id="cropButton"><i class="fa fa-crop button-icon color-orange" aria-hidden="true"></i>Crop</button>
+                <button class="button" id="openButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open</button>
+                <button class="button" id="saveButton"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save</button>
+                <button class="button" id="pasteButton"><i class="fa fa-clipboard button-icon color-blue" aria-hidden="true"></i>Paste</button>
+                <button class="button" id="cropButton"><i class="fa fa-crop button-icon color-blue" aria-hidden="true"></i>Crop</button>
                 <button class="button" id="clearButton"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>
+                <button class="button" id="runButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run</button>
             </div>
             <div id="editor"></div>            
         </div>
     </div>
-
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="request.js"></script>
     <script src="ropyeditor.js"></script>
     <script src="main.js"></script>
-  </body>
+</body>
 </html>
