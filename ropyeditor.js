@@ -296,44 +296,57 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
         if(!keysActive) return;
 
-        //console.log(`KeyDown ${e.key} ${e.code}`);
-        if (e.code == 'Space') {
-            setCellFunc('\u00A0')();
-            e.preventDefault();
-        } else if (e.code == 'Backspace') {
-            moveLeft();
-            cells[y][x].innerHTML = '\u00A0';
-            e.preventDefault();
-        } else if (e.code == 'Delete') {
-            cells[y][x].innerHTML = '\u00A0';
-            e.preventDefault();
-        } else if (specialHandlingKeys.includes(e.key)) {
-            setCellFunc(e.key)();
-            e.preventDefault();
+        console.log(`KeyDown <${e.key}> <${e.code}>`);
+
+        if (e.ctrlKey) {
+            if (e.code == 'ArrowRight') {
+                expandRight();
+                e.preventDefault();
+            } else if (e.code == 'ArrowDown') {
+                expandDown();
+                e.preventDefault();
+            }
+        } else {
+            if (e.code == 'ArrowUp') {
+                movements.up();
+                e.preventDefault();
+            } else if (e.code == 'ArrowDown') {
+                movements.down();
+                e.preventDefault();
+            } else if (e.code == 'ArrowLeft') {
+                movements.left();
+                e.preventDefault();
+            } else if (e.code == 'ArrowRight') {
+                movements.right();
+                e.preventDefault();
+            } else if (e.code == 'Home') {
+                moveActiveCell(function () { x = 0 });
+                e.preventDefault();
+            } else if (e.code == 'End') {
+                moveActiveCell(function () { x = cells[y].length - 1 });
+                e.preventDefault();
+            } else if (e.code == 'PageUp') {
+                moveActiveCell(function () { y = 0 });
+                e.preventDefault();
+            } else if (e.code == 'PageDown') {
+                moveActiveCell(function () { y = cells.length - 1 });
+                e.preventDefault();
+            } else if (e.code == 'Space') {
+                setCellFunc('\u00A0')();
+                e.preventDefault();
+            } else if (e.code == 'Backspace') {
+                movements.left();
+                cells[y][x].innerHTML = '\u00A0';
+                e.preventDefault();
+            } else if (e.code == 'Delete') {
+                cells[y][x].innerHTML = '\u00A0';
+                e.preventDefault();
+            } else if (specialHandlingKeys.includes(e.key)) {
+                setCellFunc(e.key)();
+                e.preventDefault();
+            }
         }
     };
-
-    var listener = new window.keypress.Listener();
-
-    listener.simple_combo("right", movements.right);
-    listener.simple_combo("left", movements.left);
-    listener.simple_combo("down", movements.down);
-    listener.simple_combo("up", movements.up);
-    listener.simple_combo("home", function () {
-        moveActiveCell(function () { x = 0 });
-    });
-    listener.simple_combo("end", function () {
-        moveActiveCell(function () { x = cells[y].length - 1 });
-    });
-    listener.simple_combo("pageup", function () {
-        moveActiveCell(function () { y = 0 });
-    });
-    listener.simple_combo("pagedown", function () {
-        moveActiveCell(function () { y = cells.length - 1 });
-    });
-
-    listener.simple_combo("ctrl right", expandRight);
-    listener.simple_combo("ctrl down", expandDown);
 
     renderActiveCell();
 
