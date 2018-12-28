@@ -65,16 +65,22 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         dimElement.innerHTML = '' + cells[0].length + ' by ' + cells.length;
     };
 
-    var makeRow = function (row) {
+    var makeRow = function (row, atRowNumOptional) {
         var rowElement = document.createElement("div");
         rowElement.className = 'ropyEditorRow';
         var rowOfCells = [];
-        cells.push(rowOfCells);
+        var insertAtIndex = atRowNumOptional || cells.length;
+        cells.splice(insertAtIndex, 0, rowOfCells);
         for (let colIndex = 0; colIndex < row.length; colIndex++) {
             makeCell(row[colIndex], rowOfCells, rowElement);
         }
-        containerElement.appendChild(rowElement);
-        rowElements.push(rowElement);
+        if (atRowNumOptional) {
+            containerElement.insertBefore(rowElement, containerElement.childNodes[atRowNumOptional]);
+        }
+        else {
+            containerElement.appendChild(rowElement);
+        }
+        rowElements.splice(insertAtIndex, 0, rowElement);
     };
 
     var expandRight = function() {
@@ -85,12 +91,12 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         }
     };
 
-    var expandDown = function () {
+    var expandDown = function (atRowNumOptional) {
         var runes = [];
         for (let i = 0; i < cells[0].length; i++) {
             runes.push(' ');
         }
-        makeRow(runes);
+        makeRow(runes, atRowNumOptional);
     };
 
     var runesForRow = new Array(50);
@@ -304,6 +310,9 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
                 e.preventDefault();
             } else if (e.code == 'ArrowDown') {
                 expandDown();
+                e.preventDefault();
+            } else if (e.code == 'Enter') {
+                expandDown(y+1);
                 e.preventDefault();
             }
         } else {
