@@ -311,6 +311,10 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             } else if (e.code == 'ArrowDown') {
                 expandDown();
                 e.preventDefault();
+            } else if (e.shiftKey && e.code == 'Enter') {
+                expandDown(y);
+                y++;
+                e.preventDefault();
             } else if (e.code == 'Enter') {
                 expandDown(y+1);
                 e.preventDefault();
