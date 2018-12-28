@@ -201,6 +201,28 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         return cell.innerText == NBSP;
     }
 
+    var paste = function (source) {
+        console.log(source);
+        source = _.map(source.split('\n'), function (line) { return line.split(''); });
+        
+        var missingRowNum = Math.max(0, source.length + y - cells.length);
+        _.times(missingRowNum, expandDown);
+
+        var missingColNum = Math.max(0, _.max(_.map(source, function (x) { return x.length; })) + x - cells[0].length);
+        _.times(missingColNum, expandRight);
+
+        var xx = x;
+        var yy = y;
+        source.forEach(row => {
+            row.forEach(rune => {
+                cells[yy][xx].innerHTML = rune == ' ' ? NBSP : rune;
+                xx++;
+            });
+            yy++;
+            xx = x;
+        });
+    };
+
     var crop = function () {
         cells[y][x].className = 'ropyEditorRune';
         
@@ -265,13 +287,16 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         x = 0;
         y = 0;
         renderActiveCell();
-    };
+    }; // end crop
 
-
+    var keysActive = true;
     var specialHandlingKeys = 'abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789!"#¤%&/()=?`,.-;:_\'\\@£$€{[]}*^~|§<>'.split('');
 
     window.document.body.onkeydown = function (e) {
-        console.log(`KeyDown ${e.key} ${e.code}`);
+
+        if(!keysActive) return;
+
+        //console.log(`KeyDown ${e.key} ${e.code}`);
         if (e.code == 'Space') {
             setCellFunc('\u00A0')();
             e.preventDefault();
@@ -312,9 +337,15 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     renderActiveCell();
 
+    var setKeysActive = function (b) {
+        keysActive = b;
+    };
+
     return {
         expandRight: expandRight,
         expandDown: expandDown,
-        crop: crop
+        crop: crop,
+        paste: paste,
+        setKeysActive: setKeysActive
     };
 };

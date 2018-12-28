@@ -17,6 +17,13 @@
         <span id="title"><i class="fa fa-code button-icon color-yellow" aria-hidden="true"></i>Ropy IDE</span>
     </div>
 
+    <div id="clipboard" style="display: none">
+        <p>Paste your source here anc click OK:</p>
+        <textarea id="clipboardText" style="width: 100%; height: 200px;"></textarea>
+        <button class="button" id="pasteOkButton">OK</button>
+        <button class="button" id="pasteCancelButton">Cancel</button>
+    </div>
+
     <div id="documentation" style="display: none">
         <p style="text-align:center;"><strong style="color: #CBCB41;">HELP</strong></p>
         <p>
@@ -129,6 +136,7 @@
                 </div>
                 <button class="button" id="openButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open..</button>
                 <button class="button" id="saveButton"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save..</button>
+                <button class="button" id="pasteButton"><i class="fa fa-clipboard button-icon color-blue" aria-hidden="true"></i>Paste..</button>
                 <button class="button" id="runButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run..</button>
                 <button class="button" id="cropButton"><i class="fa fa-crop button-icon color-orange" aria-hidden="true"></i>Crop</button>
                 <button class="button" id="clearButton"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>

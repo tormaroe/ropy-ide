@@ -12,6 +12,20 @@ var toggleDocumentation = (function() {
     };
 })();
 
+var togglePaste = (function(editor) {
+    var visible = false;
+    var div = document.getElementById('clipboard');
+    return function () {
+        if (visible) {
+            div.style = 'display: none';
+        } else {
+            div.style = 'display: block';
+        }
+        editor.setKeysActive(visible);
+        visible = !visible;
+    };
+});
+
 (function () {    
     var editorElement = document.getElementById('editor');
     var posElement = document.getElementById('infoCurrentPos');
@@ -26,6 +40,9 @@ var toggleDocumentation = (function() {
     var saveButton = document.getElementById('saveButton');
     saveButton.onclick = function () { alert('Save not yet implemented'); };
 
+    var pasteButton = document.getElementById('pasteButton');
+    pasteButton.onclick = togglePaste(editor);
+
     var runButton = document.getElementById('runButton');
     runButton.onclick = function () { alert('Run not yet implemented'); };
 
@@ -34,5 +51,16 @@ var toggleDocumentation = (function() {
 
     var clearButton = document.getElementById('clearButton');
     clearButton.onclick = function () { alert('Clear not yet implemented'); };
+
+    var clipboardText = document.getElementById('clipboardText');
+
+    var pasteCancelButton = document.getElementById('pasteCancelButton');
+    pasteCancelButton.onclick = pasteButton.onclick;
+
+    var pasteOkButton = document.getElementById('pasteOkButton');
+    pasteOkButton.onclick = function () {
+        editor.paste(clipboardText.value);
+        pasteCancelButton.onclick();
+    };
 
 })();

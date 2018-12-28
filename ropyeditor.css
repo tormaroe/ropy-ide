@@ -42,6 +42,26 @@ html, body {
     transform: translate(-50%, -50%);
 }
 
+#clipboard {
+    background-color: #3C3C3C;
+    color: #8B8B8B;
+    border: solid 1px #8B8B8B;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.9em;
+    margin:0 auto;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    width: 50%;
+    height: 50%;
+    z-index: 1000005;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #centerDivWrapper{
     width: 99%;
     height: 100%;
