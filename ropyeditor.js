@@ -55,39 +55,46 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     var rowElements = [];
     var cells = [];
 
-    var makeCell = function (rune, rowOfCells, rowElement) {
+    var makeCell = function (rune, rowOfCells, rowElement, atColumNumOptional) {
+        var atColumNumSpecified = typeof(atColumNumOptional) === 'number';
+        var insertAtIndex = atColumNumSpecified ? atColumNumOptional : rowOfCells.length;
         var cell = document.createElement("span");
         cell.className = 'ropyEditorRune';
         var node = document.createTextNode(rune !== ' ' ? rune : '\u00A0');
         cell.appendChild(node);
-        rowOfCells.push(cell);
-        rowElement.appendChild(cell);
+        rowOfCells.splice(insertAtIndex, 0, cell);
+        if (atColumNumSpecified) {
+            console.log(`insert before, insertAtIndex=${insertAtIndex}`);
+            rowElement.insertBefore(cell, rowElement.childNodes[atColumNumOptional]);
+        } else {
+            rowElement.appendChild(cell);
+        }
         dimElement.innerHTML = '' + cells[0].length + ' by ' + cells.length;
     };
 
     var makeRow = function (row, atRowNumOptional) {
+        var atRowNumSpecified = typeof(atRowNumOptional) === 'number';
         var rowElement = document.createElement("div");
         rowElement.className = 'ropyEditorRow';
         var rowOfCells = [];
-        var insertAtIndex = atRowNumOptional || cells.length;
+        var insertAtIndex = atRowNumSpecified ? atRowNumOptional : cells.length;
         cells.splice(insertAtIndex, 0, rowOfCells);
         for (let colIndex = 0; colIndex < row.length; colIndex++) {
             makeCell(row[colIndex], rowOfCells, rowElement);
         }
-        if (atRowNumOptional) {
+        if (atRowNumSpecified) {
             containerElement.insertBefore(rowElement, containerElement.childNodes[atRowNumOptional]);
-        }
-        else {
+        } else {
             containerElement.appendChild(rowElement);
         }
         rowElements.splice(insertAtIndex, 0, rowElement);
     };
 
-    var expandRight = function() {
+    var expandRight = function(atColumNumOptional) {
         for (let i = 0; i < cells.length; i++) {
             const row = cells[i];
             const rowElement = rowElements[i];
-            makeCell(' ', row, rowElement);
+            makeCell(' ', row, rowElement, atColumNumOptional);
         }
     };
 
@@ -310,6 +317,13 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
                 e.preventDefault();
             } else if (e.code == 'ArrowDown') {
                 expandDown();
+                e.preventDefault();
+            } else if (e.altKey && e.shiftKey && e.code == 'Enter') {
+                expandRight(x);
+                x++;
+                e.preventDefault();
+            } else if (e.altKey && e.code == 'Enter') {
+                expandRight(x+1);
                 e.preventDefault();
             } else if (e.shiftKey && e.code == 'Enter') {
                 expandDown(y);
