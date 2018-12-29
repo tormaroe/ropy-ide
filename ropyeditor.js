@@ -1,57 +1,6 @@
+var ropy = ropy || {};
 
-var nextMoveMagic = function (coordinates, callback) {
-    var nextDirection = 'right';
-    var prevX = undefined;
-    var prevY = undefined;
-
-    const tests = Object.entries({
-        left: function (x, y) {
-            return y === prevY && x === (prevX - 1);
-        },
-        down: function (x, y) {
-            return x === prevX && y === (prevY + 1);
-        },
-        up: function (x, y) {
-            return x === prevX && y === (prevY - 1);
-        },
-        downRight: function (x, y) {
-            return x === (prevX + 1) && y === (prevY + 1);
-        },
-        downLeft: function (x, y) {
-            return x === (prevX - 1) && y === (prevY + 1);
-        },
-        upRight: function (x, y) {
-            return x === (prevX + 1) && y === (prevY - 1);
-        },
-        upLeft: function (x, y) {
-            return x === (prevX - 1) && y === (prevY - 1);
-        }
-    });
- 
-    return function () {
-        var [x, y] = coordinates();
-        if (prevX !== undefined) { 
-            nextDirection = 'right';
-            for (const [dir, test] of tests) {
-                if (test(x, y)) {
-                    nextDirection = dir;
-                    break;
-                }
-            }
-        }
-        prevX = x;
-        prevY = y;
-        callback(nextDirection);
-    };
-};
-
-var thunk = function (f) {
-    return function () {
-        f();
-    };
-};
-
-ropyEditor = function (containerElement, posElement, dimElement, directionElement, modeElement) {
+ropy.editor = function (containerElement, posElement, dimElement, directionElement, modeElement) {
     const NBSP = String.fromCharCode(160);
     //var selectionMode = false;
     //var selectionStartX = undefined;
@@ -60,7 +9,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     var y = 0;
     var rowElements = [];
     var cells = [];
-
+    
     var makeCell = function (rune, rowOfCells, rowElement, atColumNumOptional) {
         var atColumNumSpecified = typeof(atColumNumOptional) === 'number';
         var insertAtIndex = atColumNumSpecified ? atColumNumOptional : rowOfCells.length;
@@ -77,7 +26,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         }
         dimElement.innerHTML = '' + cells[0].length + ' by ' + cells.length;
     };
-
+    
     var makeRow = function (row, atRowNumOptional) {
         var atRowNumSpecified = typeof(atRowNumOptional) === 'number';
         var rowElement = document.createElement("div");
@@ -95,7 +44,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         }
         rowElements.splice(insertAtIndex, 0, rowElement);
     };
-
+    
     var expandRight = function(atColumNumOptional) {
         for (let i = 0; i < cells.length; i++) {
             const row = cells[i];
@@ -103,7 +52,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             makeCell(' ', row, rowElement, atColumNumOptional);
         }
     };
-
+    
     var expandDown = function (atRowNumOptional) {
         var runes = [];
         for (let i = 0; i < cells[0].length; i++) {
@@ -111,36 +60,36 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         }
         makeRow(runes, atRowNumOptional);
     };
-
+    
     var cutRow = function () {
         var rowIndex = y;
         if (cells.length < 2) return;
         if (y === 0)
-            movements.down();
+        movements.down();
         else
-            movements.up();
+        movements.up();
         
         containerElement.removeChild(rowElements[rowIndex]);
         cells.splice(rowIndex, 1);
         rowElements.splice(rowIndex, 1);
     };
-
+    
     var cutColumn = function () {
         var colIndex = x;
         if (cells[0].length < 2) return;
         if (x > 0)
-            movements.left();
-
+        movements.left();
+        
         for(let i = 0; i < cells.length; i++) {
             let row = cells[i];
             let cell = row[colIndex];
             row.splice(colIndex, 1);
             rowElements[i].removeChild(cell);
         }
-
+        
         renderActiveCell();
     };
-
+    
     var initialize = function () {
         var runesForRow = new Array(50);
         runesForRow.fill(' ');
@@ -148,13 +97,13 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             makeRow(runesForRow);
         }
     };
-
+    
     var renderActiveCell = function () {
         cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive';
         cells[y][x].scrollIntoView(false);
         posElement.innerHTML = '' + x + ',' + y;
     };
-
+    
     //var renderSelection = function () {
     //    if (selectionMode) {
     //        console.log("Render selection");
@@ -167,48 +116,48 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     //        }
     //    }
     //};
-
+    
     //var startSelection = function () {
     //    selectionMode = true;
     //    selectionStartX = x;
     //    selectionStartY = y;
     //    modeElement.innerHTML = "select";
     //};
-//
+    //
     //var editorEscape = function () {
     //    selectionMode = false;
     //    selectionStartX = undefined;
     //    selectionStartY = undefined;
     //    modeElement.innerHTML = "normal";
     //};
-
+    
     var moveActiveCell = function (fMove) {
         cells[y][x].className = 'ropyEditorRune';
         fMove();
         //renderSelection();
         renderActiveCell();
     };
-
+    
     var moveRight = function () {
         if (cells[y].length > (x + 1))
-            moveActiveCell(function () { x++ });
+        moveActiveCell(function () { x++ });
     };
-
+    
     var moveLeft = function () {
         if (x > 0)
-            moveActiveCell(function () { x-- });
+        moveActiveCell(function () { x-- });
     };
-
+    
     var moveDown = function () {
         if (cells.length > (y + 1))
-            moveActiveCell(function () { y++ });
+        moveActiveCell(function () { y++ });
     };
-
+    
     var moveUp = function () {
         if (y > 0)
-            moveActiveCell(function () { y-- });
+        moveActiveCell(function () { y-- });
     };
-
+    
     var movements = {
         right: moveRight,
         left: moveLeft,
@@ -231,14 +180,62 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             moveLeft();
         }
     };
-
+    
+    
+    var nextMoveMagic = function (coordinates, callback) {
+        var nextDirection = 'right';
+        var prevX = undefined;
+        var prevY = undefined;
+        
+        const tests = Object.entries({
+            left: function (x, y) {
+                return y === prevY && x === (prevX - 1);
+            },
+            down: function (x, y) {
+                return x === prevX && y === (prevY + 1);
+            },
+            up: function (x, y) {
+                return x === prevX && y === (prevY - 1);
+            },
+            downRight: function (x, y) {
+                return x === (prevX + 1) && y === (prevY + 1);
+            },
+            downLeft: function (x, y) {
+                return x === (prevX - 1) && y === (prevY + 1);
+            },
+            upRight: function (x, y) {
+                return x === (prevX + 1) && y === (prevY - 1);
+            },
+            upLeft: function (x, y) {
+                return x === (prevX - 1) && y === (prevY - 1);
+            }
+        });
+        
+        return function () {
+            var [x, y] = coordinates();
+            if (prevX !== undefined) { 
+                nextDirection = 'right';
+                for (const [dir, test] of tests) {
+                    if (test(x, y)) {
+                        nextDirection = dir;
+                        break;
+                    }
+                }
+            }
+            prevX = x;
+            prevY = y;
+            callback(nextDirection);
+        };
+    };
+    
+    
     var nextMove = nextMoveMagic(function () {
         return [x, y];
     }, function (direction) {
         movements[direction]();
         infoDirection.innerHTML = direction;
     });
-
+    
     var setCellFunc = function (rune) {
         return function () {
             console.log("Set cell " + rune);
@@ -246,11 +243,11 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             nextMove();
         };
     };
-
+    
     var cellIsEmpty = function (cell) {
         return cell.innerText == NBSP;
     }
-
+    
     var getGrid = function () {
         return _.map(cells, function (row) {
             return _.map(row, function (cell) {
@@ -259,7 +256,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             })
         });
     };
-
+    
     var clear = function () {
         cells.forEach(row => {
             row.forEach(cell => {
@@ -267,17 +264,23 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             });
         });
     };
-
+    
+    var thunk = function (f) {
+        return function () {
+            f();
+        };
+    };
+    
     var paste = function (source) {
         console.log(source);
         source = ropy.core.tokenize(source); //_.map(source.split('\n'), function (line) { return line.split(''); });
         
         var missingRowNum = Math.max(0, source.length + y - cells.length);
         _.times(missingRowNum, thunk(expandDown));
-
+        
         var missingColNum = Math.max(0, _.max(_.map(source, function (x) { return x.length; })) + x - cells[0].length);
         _.times(missingColNum, thunk(expandRight));
-
+        
         var xx = x;
         var yy = y;
         source.forEach(row => {
@@ -289,41 +292,41 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             xx = x;
         });
     };
-
+    
     var crop = function () {
         cells[y][x].className = 'ropyEditorRune';
         
         var removeTopRowsCount = _
-            .takeWhile(cells, function (rowCells) {
-                return _.every(rowCells, cellIsEmpty);
-            })
-            .length;
+        .takeWhile(cells, function (rowCells) {
+            return _.every(rowCells, cellIsEmpty);
+        })
+        .length;
         removeTopRowsCount = Math.min(removeTopRowsCount, cells.length - 1);
         for(var idx=0; idx<removeTopRowsCount; idx++) {
             var rowElm = rowElements.shift();
             rowElm.parentNode.removeChild(rowElm);
         }
         cells = _.drop(cells, removeTopRowsCount);
-
+        
         var removeBottomRowsCount = _
-            .takeRightWhile(cells, function (rowCells) {
-                return _.every(rowCells, cellIsEmpty);
-            })
-            .length;
+        .takeRightWhile(cells, function (rowCells) {
+            return _.every(rowCells, cellIsEmpty);
+        })
+        .length;
         removeBottomRowsCount = Math.min(removeBottomRowsCount, cells.length - 1);
         for(var idx=cells.length-1; idx>=cells.length-removeBottomRowsCount; idx--) {
             var rowElm = rowElements.pop();
             rowElm.parentNode.removeChild(rowElm);
         }
         cells = _.take(cells, cells.length - removeBottomRowsCount);
-
+        
         var removeLeftColsCount = _
-            .chain(cells)
-            .map(function (rowCells) {
-                return _.takeWhile(rowCells, cellIsEmpty).length;
-            })
-            .min()
-            .value();
+        .chain(cells)
+        .map(function (rowCells) {
+            return _.takeWhile(rowCells, cellIsEmpty).length;
+        })
+        .min()
+        .value();
         removeLeftColsCount = Math.min(removeLeftColsCount, cells[0].length - 1);
         rowElements.forEach(row => {
             for (let idx = 0; idx < removeLeftColsCount; idx++) {
@@ -333,14 +336,14 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         cells = _.map(cells, function (rowCells) {
             return _.drop(rowCells, removeLeftColsCount);
         });
-
+        
         var removeRightColsCount = _
-            .chain(cells)
-            .map(function (rowCells) {
-                return _.takeRightWhile(rowCells, cellIsEmpty).length;
-            })
-            .min()
-            .value();
+        .chain(cells)
+        .map(function (rowCells) {
+            return _.takeRightWhile(rowCells, cellIsEmpty).length;
+        })
+        .min()
+        .value();
         removeRightColsCount = Math.min(removeRightColsCount, cells[0].length - 1);
         rowElements.forEach(row => {
             for (let idx = 0; idx < removeRightColsCount; idx++) {
@@ -350,21 +353,21 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         cells = _.map(cells, function (rowCells) {
             return _.take(rowCells, rowCells.length - removeRightColsCount);
         });
-
+        
         x = 0;
         y = 0;
         renderActiveCell();
     }; // end crop
-
+    
     var keysActive = true;
     var specialHandlingKeys = 'abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789!"#¤%&/()=?`,.-;:_\'\\@£$€{[]}*^~|§<>'.split('');
-
+    
     window.document.body.onkeydown = function (e) {
-
+        
         if(!keysActive) return;
-
+        
         //console.log(`KeyDown <${e.key}> <${e.code}>`);
-
+        
         if (e.ctrlKey) {
             if (e.code == 'ArrowRight') {
                 expandRight();
@@ -437,14 +440,14 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
             }
         }
     };
-
+    
     initialize();
     renderActiveCell();
-
+    
     var setKeysActive = function (b) {
         keysActive = b;
     };
-
+    
     return {
         expandRight: expandRight,
         expandDown: expandDown,

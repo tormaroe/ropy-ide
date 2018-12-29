@@ -1,5 +1,6 @@
+var ropy = ropy || {};
 
-var makeToggler = function (elementId, callback) {
+ropy.makeToggler = function (elementId, callback) {
     var visible = false;
     var div = document.getElementById(elementId);
     return function () {
@@ -13,7 +14,7 @@ var makeToggler = function (elementId, callback) {
     };
 };
 
-var toggleDocumentation = makeToggler('documentation');
+ropy.toggleDocumentation = ropy.makeToggler('documentation');
 
 (function () {    
     var screenEditor = document.getElementById('screenEditor');
@@ -24,9 +25,9 @@ var toggleDocumentation = makeToggler('documentation');
     var directionElement = document.getElementById('infoDirection');
     var modeElement = document.getElementById('infoMode');
 
-    var editor = ropyEditor(editorElement, posElement, dimElement, directionElement, modeElement);
+    var editor = ropy.editor(editorElement, posElement, dimElement, directionElement, modeElement);
     
-    var dbg = ropyDebugger({
+    var dbg = ropy.debugger({
         grid: document.getElementById('debuggerGrid'),
         iterationCount: document.getElementById('iterationCount'),
         sleepLength: document.getElementById('sleepLength'),
@@ -41,7 +42,7 @@ var toggleDocumentation = makeToggler('documentation');
     /*
      *  >>>   O P E N
      */
-    var toggleOpen = makeToggler('openDialog');
+    var toggleOpen = ropy.makeToggler('openDialog');
 
     var programUrlLoader = function (url) {
         return function () {
@@ -118,7 +119,7 @@ var toggleDocumentation = makeToggler('documentation');
     /*
      *  >>>   P A S T E
      */
-    var togglePaste = makeToggler('clipboard', function (visible) {
+    var togglePaste = ropy.makeToggler('clipboard', function (visible) {
         editor.setKeysActive(visible);
     });
 

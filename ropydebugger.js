@@ -1,5 +1,6 @@
+var ropy = ropy || {};
 
-ropyDebugger = function (elements) {
+ropy.debugger = function (elements) {
     const NBSP = String.fromCharCode(160);
     var program = undefined;
     var cells = [];
