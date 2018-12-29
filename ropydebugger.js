@@ -45,7 +45,7 @@ ropyDebugger = function (elements) {
     };
 
     var loadGrid = function (grid) {
-        program = make_program_object(grid);
+        program = ropy.core.make_program_object(grid);
         clearGrid();
         expandGrid();
         loadTokens();
@@ -58,7 +58,7 @@ ropyDebugger = function (elements) {
         }
         cells[program.i][program.j].className = 'ropyEditorRune ropyEditorInstructionPointer';
         elements.iterationCount.innerText = intervalCount;
-        elements.currentToken.innerText = current(program);
+        elements.currentToken.innerText = ropy.core.current(program);
         elements.sleepLength.innerText = sleepLength + 'ms';
         elements.instructionPointer.innerText = `${program.j}, ${program.i}`;
         elements.currentDirection.innerText = program.prev_direction;
@@ -113,7 +113,7 @@ ropyDebugger = function (elements) {
 
     var step = function () {
         intervalCount++;
-        evaluate(program);
+        ropy.core.evaluate(program);
         renderState();
         iPrev = program.i;
         jPrev = program.j;

@@ -270,7 +270,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
 
     var paste = function (source) {
         console.log(source);
-        source = _.map(source.split('\n'), function (line) { return line.split(''); });
+        source = ropy.core.tokenize(source); //_.map(source.split('\n'), function (line) { return line.split(''); });
         
         var missingRowNum = Math.max(0, source.length + y - cells.length);
         _.times(missingRowNum, thunk(expandDown));
