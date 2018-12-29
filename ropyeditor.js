@@ -150,7 +150,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     };
 
     var renderActiveCell = function () {
-        cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive'
+        cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive';
         cells[y][x].scrollIntoView(false);
         posElement.innerHTML = '' + x + ',' + y;
     };
@@ -250,6 +250,15 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
     var cellIsEmpty = function (cell) {
         return cell.innerText == NBSP;
     }
+
+    var getGrid = function () {
+        return _.map(cells, function (row) {
+            return _.map(row, function (cell) {
+                let rune = cell.innerText;
+                return rune == NBSP ? ' ' : rune;
+            })
+        });
+    };
 
     var clear = function () {
         cells.forEach(row => {
@@ -442,6 +451,7 @@ ropyEditor = function (containerElement, posElement, dimElement, directionElemen
         crop: crop,
         paste: paste,
         clear: clear,
-        setKeysActive: setKeysActive
+        setKeysActive: setKeysActive,
+        getGrid: getGrid
     };
 };

@@ -60,13 +60,13 @@ a:hover {
 #clipboard {
 }
 
-#centerDivWrapper{
+.centerDivWrapper{
     width: 99%;
     height: 100%;
     margin: 0 auto;
 }
 
-#centerDiv {
+.centerDiv {
     padding: 55px 0;
     height: 100%;
     -webkit-box-sizing: border-box;
@@ -130,6 +130,37 @@ a:hover {
     background-color: #DBDBD0 !important;
     color: #1E1E1E;
 }
+.ropyEditorInstructionPointer {
+    background-color: #D97533 !important;
+    color: #DCDCAA;
+}
+.stackElement {
+    font-size: 0.9em;
+    font-family: 'Source Code Pro', monospace;
+    background-color: #CBCB41 !important;
+    color: #1E1E1E;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin:1px;
+}
+.memoryKey {
+    font-size: 0.9em;
+    font-family: 'Source Code Pro', monospace;
+    background-color: #D97533 !important;
+    color: #1E1E1E;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin:0px;
+}
+.memoryValue {
+    font-size: 0.9em;
+    font-family: 'Source Code Pro', monospace;
+    background-color: #CBCB41 !important;
+    color: #1E1E1E;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right:1px;
+}
 
 .toolbar-info {
     font-family: Arial, Helvetica, sans-serif;
@@ -140,4 +171,30 @@ a:hover {
     padding-right: 15px;    
     background-color: #2D2D2D;
     color: #8B8B8B;
+}
+
+.debuggerSidebar {
+    float: left;
+    width: 390px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #8B8B8B;
+    background-color: #2D2D2D;
+    padding: 5px;
+}
+.debuggerGrid {
+    margin-left: 410px;
+}
+.block-formatting-context {
+    display: inline-block;
+    width: 100%;
+    zoom: 1; /* new block formatting context via hasLayout for IE 6/7 */
+}
+.clear {
+    color: #900;
+    display: block;
+    clear: both;
+}
+.tdSectionStart {
+    border-top: solid 1px #8B8B8B;
+    padding-top: 10px;
 }

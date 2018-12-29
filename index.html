@@ -22,7 +22,7 @@
         <p><i>Click to load..</i></p>
         <ul id="examplePrograms"></ul>
     </div>
-
+    
     <div id="clipboard" class="modal" style="display: none">
         <p>Paste your source here anc click OK:</p>
         <textarea id="clipboardText" style="width: 100%; height: 200px;"></textarea>
@@ -185,8 +185,8 @@
         </p>
     </div>
     
-    <div id="centerDivWrapper">
-        <div id="centerDiv">
+    <div id="screenEditor" class="centerDivWrapper">
+        <div class="centerDiv">
             <div style="margin-bottom:4px;">
                 <div style="float:right;margin-top:8px;">
                     <span class="toolbar-info" id="infoDirection">right</span>
@@ -199,15 +199,84 @@
                 <button class="button" id="pasteButton"><i class="fa fa-clipboard button-icon color-blue" aria-hidden="true"></i>Paste</button>
                 <button class="button" id="cropButton"><i class="fa fa-crop button-icon color-blue" aria-hidden="true"></i>Crop</button>
                 <button class="button" id="clearButton"><i class="fa fa-trash button-icon color-orange" aria-hidden="true"></i>Clear</button>
-                <button class="button" id="runButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Run</button>
+                <button class="button" id="runButton"><i class="fa fa-bug button-icon color-yellow" aria-hidden="true"></i>Debugger</button>
             </div>
             <div id="editor"></div>            
         </div>
     </div>
     
+    
+    <div id="screenDebugger" class="centerDivWrapper" style="display: none">
+        <div class="centerDiv">
+            <div style="margin-bottom:4px;">
+                <button class="button" id="closeDebuggerButton"><i class="fa fa-window-close button-icon color-orange" aria-hidden="true"></i>Exit debugger</button>
+                <button class="button" id="rewindDebuggerButton"><i class="fa fa-fast-backward button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="pauseDebuggerButton"><i class="fa fa-pause button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="runDebuggerButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="stepDebuggerButton"><i class="fa fa-step-forward button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="speedUpButton"><i class="fa fa-fighter-jet button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="speedDownButton"><i class="fa fa-snowflake-o button-icon color-yellow" aria-hidden="true"></i></button>
+            </div>
+            
+            <div class="container block-formatting-context">
+                <div class="debuggerSidebar">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="padding-bottom:8px;">Iteration count</td>
+                            <td style="text-align:right" id="iterationCount">0</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;">Sleep length</td>
+                            <td style="text-align:right" id="sleepLength">0 ms</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;">Current token</td>
+                            <td style="text-align:right" id="currentToken"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;">Instruction Pointer</td>
+                            <td style="text-align:right" id="instructionPointer">x, y</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;">Direction</td>
+                            <td style="text-align:right" id="currentDirection">?</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;">Program done</td>
+                            <td style="text-align:right" id="isDone">?</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;" colspan=2 class="tdSectionStart">
+                                Data Stack
+                                <div id="dataStack"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;" colspan=2 class="tdSectionStart">Return Stack</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;" colspan=2 class="tdSectionStart">
+                                Memory
+                                <div id="memory"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="debuggerGrid">
+                    <div id="debuggerGrid" class="block-formatting-context">
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="request.js"></script>
+    <script src="ropy.js"></script>
     <script src="ropyeditor.js"></script>
+    <script src="ropydebugger.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

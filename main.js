@@ -16,13 +16,27 @@ var makeToggler = function (elementId, callback) {
 var toggleDocumentation = makeToggler('documentation');
 
 (function () {    
+    var screenEditor = document.getElementById('screenEditor');
+    var screenDebugger = document.getElementById('screenDebugger');
     var editorElement = document.getElementById('editor');
     var posElement = document.getElementById('infoCurrentPos');
     var dimElement = document.getElementById('infoDimensions');
     var directionElement = document.getElementById('infoDirection');
     var modeElement = document.getElementById('infoMode');
+
     var editor = ropyEditor(editorElement, posElement, dimElement, directionElement, modeElement);
     
+    var dbg = ropyDebugger({
+        grid: document.getElementById('debuggerGrid'),
+        iterationCount: document.getElementById('iterationCount'),
+        sleepLength: document.getElementById('sleepLength'),
+        currentToken: document.getElementById('currentToken'),
+        instructionPointer: document.getElementById('instructionPointer'),
+        currentDirection: document.getElementById('currentDirection'),
+        isDone: document.getElementById('isDone'),
+        dataStack: document.getElementById('dataStack'),
+        memory: document.getElementById('memory')
+    });
     
     /*
      *  >>>   O P E N
@@ -68,9 +82,24 @@ var toggleDocumentation = makeToggler('documentation');
     
     
     /*
-     *  >>>   R U N
+     *  >>>   R U N   &   D E B U G G E R
      */
-    document.getElementById('runButton').onclick = function () { alert('Run not yet implemented'); };
+    document.getElementById('runButton').onclick = function () { 
+        screenEditor.style = 'display: none';
+        screenDebugger.style = 'display: block';
+        dbg.loadGrid(editor.getGrid())
+    };
+    document.getElementById('closeDebuggerButton').onclick = function () {
+        dbg.pause();
+        screenEditor.style = 'display: block';
+        screenDebugger.style = 'display: none';
+    }
+    document.getElementById('runDebuggerButton').onclick = dbg.start;
+    document.getElementById('pauseDebuggerButton').onclick = dbg.pause;
+    document.getElementById('rewindDebuggerButton').onclick = dbg.rewind;
+    document.getElementById('stepDebuggerButton').onclick = dbg.step;
+    document.getElementById('speedUpButton').onclick = dbg.incSpeed;
+    document.getElementById('speedDownButton').onclick = dbg.decSpeed;
     
     /*
      *  >>>   C R O P
