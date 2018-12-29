@@ -23,9 +23,9 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     var posElement = document.getElementById('infoCurrentPos');
     var dimElement = document.getElementById('infoDimensions');
     var directionElement = document.getElementById('infoDirection');
-    var modeElement = document.getElementById('infoMode');
+    var tokenElement = document.getElementById('infoToken');
 
-    var editor = ropy.editor(editorElement, posElement, dimElement, directionElement, modeElement);
+    var editor = ropy.editor(editorElement, posElement, dimElement, directionElement, tokenElement);
     
     var dbg = ropy.debugger({
         grid: document.getElementById('debuggerGrid'),

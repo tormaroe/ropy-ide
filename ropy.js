@@ -1,5 +1,30 @@
 var ropy = ropy || {};
 
+ropy.tokenShortDescription = function (token) {
+    if(token == ' ' || token == '\u00A0') {
+        return "SPACE";
+    }
+    
+    switch (token) {
+        case '+': return 'ADD (+)';
+        case '-': return 'SUBTRACT (-)';
+        case '*': return 'MULTIPLY (*)';
+        case '/': return 'DIVIDE (/)';
+        case '%': return 'MODULO (%)';
+        case '<': return 'SWAP (<)';
+        case '>': return 'DUPLICATE (>)';
+        case '?': return 'POP (?)';
+        case '#': return 'PRINT (#)';
+        case '&': return 'JOIN NUMBERS (&)';
+        case '!': return 'NOT (!)';
+        case '"': return 'STRINGIFY (")';
+        case '[': return 'STORE ([)';
+        case ']': return 'LOAD (])';
+    }
+
+    return token;
+};
+
 ropy.core = (function () {
     
     var tokenize = function (source) {

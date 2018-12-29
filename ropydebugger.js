@@ -59,7 +59,7 @@ ropy.debugger = function (elements) {
         }
         cells[program.i][program.j].className = 'ropyEditorRune ropyEditorInstructionPointer';
         elements.iterationCount.innerText = intervalCount;
-        elements.currentToken.innerText = ropy.core.current(program);
+        elements.currentToken.innerText = ropy.tokenShortDescription(ropy.core.current(program));
         elements.sleepLength.innerText = sleepLength + 'ms';
         elements.instructionPointer.innerText = `${program.j}, ${program.i}`;
         elements.currentDirection.innerText = program.prev_direction;

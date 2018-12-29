@@ -1,6 +1,6 @@
 var ropy = ropy || {};
 
-ropy.editor = function (containerElement, posElement, dimElement, directionElement, modeElement) {
+ropy.editor = function (containerElement, posElement, dimElement, directionElement, tokenElement) {
     const NBSP = String.fromCharCode(160);
     //var selectionMode = false;
     //var selectionStartX = undefined;
@@ -102,6 +102,7 @@ ropy.editor = function (containerElement, posElement, dimElement, directionEleme
         cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive';
         cells[y][x].scrollIntoView(false);
         posElement.innerHTML = '' + x + ',' + y;
+        tokenElement.innerHTML = ropy.tokenShortDescription(cells[y][x].innerText);
     };
     
     //var renderSelection = function () {
@@ -360,7 +361,7 @@ ropy.editor = function (containerElement, posElement, dimElement, directionEleme
     }; // end crop
     
     var keysActive = true;
-    var specialHandlingKeys = 'abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789!"#¤%&/()=?`,.-;:_\'\\@£$€{[]}*^~|§<>'.split('');
+    var specialHandlingKeys = 'abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789!"#¤%&/()=?`,.-;:_+\'\\@£$€{[]}*^~|§<>'.split('');
     
     window.document.body.onkeydown = function (e) {
         
