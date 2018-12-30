@@ -24,7 +24,7 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     var dimElement = document.getElementById('infoDimensions');
     var directionElement = document.getElementById('infoDirection');
     var tokenElement = document.getElementById('infoToken');
-
+    
     var editor = ropy.editor(editorElement, posElement, dimElement, directionElement, tokenElement);
     
     var dbg = ropy.debugger({
@@ -40,10 +40,42 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     });
     
     /*
-     *  >>>   O P E N
-     */
-    var toggleOpen = ropy.makeToggler('openDialog');
-
+    *  >>>   O P E N
+    */
+    
+    var programStorageLoader = function (key) {
+        return function () {
+            toggleOpen();
+            var source = ropy.storage.getProgram(key);
+            currentProgramKey = key;
+            editor.clear();
+            editor.crop();
+            editor.paste(source);
+        }
+    };
+    
+    var toggleOpen = ropy.makeToggler('openDialog', function (visible) {
+        if (!visible) { 
+            var storedProgramsElm = document.getElementById('storedPrograms');
+     
+            while (storedProgramsElm.firstChild) {
+                storedProgramsElm.removeChild(storedProgramsElm.firstChild);
+            }
+            
+            var storedPrograms = ropy.storage.listPrograms();
+            storedPrograms.forEach(x => {
+                var anchor = document.createElement("a");
+                anchor.setAttribute("href", "#");
+                anchor.innerText = x;
+                anchor.onclick = programStorageLoader(x);
+                var listItem = document.createElement("li");
+                listItem.appendChild(anchor);
+                storedProgramsElm.appendChild(listItem);
+            });
+        }
+    });
+    
+    
     var programUrlLoader = function (url) {
         return function () {
             toggleOpen();
@@ -77,14 +109,20 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     openButton.onclick = toggleOpen;
     
     /*
-     *  >>>   S A V E
-     */
-    document.getElementById('saveButton').onclick = function () { alert('Save not yet implemented'); };
+    *  >>>   S A V E
+    */
+    var currentProgramKey = undefined;
+    document.getElementById('saveButton').onclick = function () { 
+        var saveKey = prompt('Please name your program', currentProgramKey || '');
+        if (saveKey != null) {
+            ropy.storage.saveProgram(saveKey, editor.getSource());
+        } 
+    };
     
     
     /*
-     *  >>>   R U N   &   D E B U G G E R
-     */
+    *  >>>   R U N   &   D E B U G G E R
+    */
     document.getElementById('runButton').onclick = function () { 
         screenEditor.style = 'display: none';
         screenDebugger.style = 'display: block';
@@ -103,13 +141,13 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     document.getElementById('speedDownButton').onclick = dbg.decSpeed;
     
     /*
-     *  >>>   C R O P
-     */
+    *  >>>   C R O P
+    */
     document.getElementById('cropButton').onclick = editor.crop;
     
     /*
-     *  >>>   C L E A R
-     */
+    *  >>>   C L E A R
+    */
     document.getElementById('clearButton').onclick = function () { 
         if (confirm('Are you sure you want to clear everything?')) {
             editor.clear();
@@ -117,14 +155,14 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     };
     
     /*
-     *  >>>   P A S T E
-     */
+    *  >>>   P A S T E
+    */
     var togglePaste = ropy.makeToggler('clipboard', function (visible) {
         editor.setKeysActive(visible);
     });
-
+    
     document.getElementById('pasteButton').onclick = togglePaste;
-
+    
     var clipboardText = document.getElementById('clipboardText');
     
     var pasteCancelButton = document.getElementById('pasteCancelButton');

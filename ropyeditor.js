@@ -257,6 +257,10 @@ ropy.editor = function (containerElement, posElement, dimElement, directionEleme
             })
         });
     };
+
+    var getSource = function () {
+        return getGrid().map(function (row) { return row.join(''); }).join('\n');
+    };
     
     var clear = function () {
         cells.forEach(row => {
@@ -456,6 +460,7 @@ ropy.editor = function (containerElement, posElement, dimElement, directionEleme
         paste: paste,
         clear: clear,
         setKeysActive: setKeysActive,
-        getGrid: getGrid
+        getGrid: getGrid,
+        getSource: getSource
     };
 };
