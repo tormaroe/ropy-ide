@@ -14,6 +14,11 @@ a:hover {
     color: #CBCB41;
 }
 
+.secondary-link {
+    text-transform: lowercase;
+    font-size: smaller;
+}
+
 #title {
     display: inline-block;
     font-family: 'Source Code Pro', monospace;

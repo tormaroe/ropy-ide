@@ -1,6 +1,6 @@
 var ropy = ropy || {};
 
-ropy.editor = function (containerElement, posElement, dimElement, directionElement, tokenElement) {
+ropy.editor = function (containerElement, dimElement, directionElement, tokenElement) {
     const NBSP = String.fromCharCode(160);
     //var selectionMode = false;
     //var selectionStartX = undefined;
@@ -101,8 +101,7 @@ ropy.editor = function (containerElement, posElement, dimElement, directionEleme
     var renderActiveCell = function () {
         cells[y][x].className = 'ropyEditorRune ropyEditorRuneActive';
         cells[y][x].scrollIntoView(false);
-        posElement.innerHTML = '' + x + ',' + y;
-        tokenElement.innerHTML = ropy.tokenShortDescription(cells[y][x].innerText);
+        tokenElement.innerHTML = `${ropy.tokenShortDescription(cells[y][x].innerText)} at ${x}, ${y}`;
     };
     
     //var renderSelection = function () {

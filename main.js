@@ -20,12 +20,12 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     var screenEditor = document.getElementById('screenEditor');
     var screenDebugger = document.getElementById('screenDebugger');
     var editorElement = document.getElementById('editor');
-    var posElement = document.getElementById('infoCurrentPos');
+    var infoStorageElement = document.getElementById('infoStorage');
     var dimElement = document.getElementById('infoDimensions');
     var directionElement = document.getElementById('infoDirection');
     var tokenElement = document.getElementById('infoToken');
     
-    var editor = ropy.editor(editorElement, posElement, dimElement, directionElement, tokenElement);
+    var editor = ropy.editor(editorElement, dimElement, directionElement, tokenElement);
     
     var dbg = ropy.debugger({
         grid: document.getElementById('debuggerGrid'),
@@ -48,30 +48,52 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
             toggleOpen();
             var source = ropy.storage.getProgram(key);
             currentProgramKey = key;
+            infoStorage.innerText = key;
             editor.clear();
             editor.crop();
             editor.paste(source);
         }
     };
     
+    var loadStoredProgramList = function () {
+        var storedProgramsElm = document.getElementById('storedPrograms');
+            
+        while (storedProgramsElm.firstChild) {
+            storedProgramsElm.removeChild(storedProgramsElm.firstChild);
+        }
+        
+        var storedPrograms = ropy.storage.listPrograms();
+        storedPrograms.forEach(x => {
+            var anchor = document.createElement("a");
+            anchor.setAttribute("href", "#");
+            anchor.innerText = x;
+            anchor.onclick = programStorageLoader(x);
+            var listItem = document.createElement("li");
+            listItem.appendChild(anchor);
+            
+            var deleteAnchor = document.createElement("a");
+            deleteAnchor.setAttribute("href", "#");
+            deleteAnchor.className = "secondary-link";
+            deleteAnchor.innerText = " (delete)";
+            deleteAnchor.onclick = programStorageRemover(x);
+            listItem.appendChild(deleteAnchor);
+            
+            storedProgramsElm.appendChild(listItem);
+        });
+    };
+
+    var programStorageRemover = function (key) {
+        return function () {
+            if (confirm("Sure?")) {
+                ropy.storage.deleteProgram(key);
+                loadStoredProgramList();
+            }
+        }
+    };
+    
     var toggleOpen = ropy.makeToggler('openDialog', function (visible) {
         if (!visible) { 
-            var storedProgramsElm = document.getElementById('storedPrograms');
-     
-            while (storedProgramsElm.firstChild) {
-                storedProgramsElm.removeChild(storedProgramsElm.firstChild);
-            }
-            
-            var storedPrograms = ropy.storage.listPrograms();
-            storedPrograms.forEach(x => {
-                var anchor = document.createElement("a");
-                anchor.setAttribute("href", "#");
-                anchor.innerText = x;
-                anchor.onclick = programStorageLoader(x);
-                var listItem = document.createElement("li");
-                listItem.appendChild(anchor);
-                storedProgramsElm.appendChild(listItem);
-            });
+           loadStoredProgramList(); 
         }
     });
     
@@ -116,6 +138,7 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
         var saveKey = prompt('Please name your program', currentProgramKey || '');
         if (saveKey != null) {
             ropy.storage.saveProgram(saveKey, editor.getSource());
+            infoStorage.innerText = saveKey;
         } 
     };
     
