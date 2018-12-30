@@ -25,7 +25,11 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     var directionElement = document.getElementById('infoDirection');
     var tokenElement = document.getElementById('infoToken');
     
-    var editor = ropy.editor(editorElement, dimElement, directionElement, tokenElement);
+    var editor = ropy.editor(editorElement, dimElement, directionElement, tokenElement, function () {
+        if (currentProgramKey) {
+            infoStorageElement.innerText = currentProgramKey + " [unsaved]";
+        }
+    });
     
     var dbg = ropy.debugger({
         grid: document.getElementById('debuggerGrid'),
@@ -48,16 +52,16 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
             toggleOpen();
             var source = ropy.storage.getProgram(key);
             currentProgramKey = key;
-            infoStorage.innerText = key;
             editor.clear();
             editor.crop();
             editor.paste(source);
+            infoStorageElement.innerText = key;
         }
     };
     
     var loadStoredProgramList = function () {
         var storedProgramsElm = document.getElementById('storedPrograms');
-            
+        
         while (storedProgramsElm.firstChild) {
             storedProgramsElm.removeChild(storedProgramsElm.firstChild);
         }
@@ -81,7 +85,7 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
             storedProgramsElm.appendChild(listItem);
         });
     };
-
+    
     var programStorageRemover = function (key) {
         return function () {
             if (confirm("Sure?")) {
@@ -93,7 +97,7 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
     
     var toggleOpen = ropy.makeToggler('openDialog', function (visible) {
         if (!visible) { 
-           loadStoredProgramList(); 
+            loadStoredProgramList(); 
         }
     });
     
@@ -138,7 +142,7 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
         var saveKey = prompt('Please name your program', currentProgramKey || '');
         if (saveKey != null) {
             ropy.storage.saveProgram(saveKey, editor.getSource());
-            infoStorage.innerText = saveKey;
+            infoStorageElement.innerText = saveKey;
         } 
     };
     

@@ -1,6 +1,6 @@
 var ropy = ropy || {};
 
-ropy.editor = function (containerElement, dimElement, directionElement, tokenElement) {
+ropy.editor = function (containerElement, dimElement, directionElement, tokenElement, onChange) {
     const NBSP = String.fromCharCode(160);
     //var selectionMode = false;
     //var selectionStartX = undefined;
@@ -51,6 +51,7 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
             const rowElement = rowElements[i];
             makeCell(' ', row, rowElement, atColumNumOptional);
         }
+        onChange && onChange();
     };
     
     var expandDown = function (atRowNumOptional) {
@@ -59,6 +60,7 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
             runes.push(' ');
         }
         makeRow(runes, atRowNumOptional);
+        onChange && onChange();
     };
     
     var cutRow = function () {
@@ -72,6 +74,8 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
         containerElement.removeChild(rowElements[rowIndex]);
         cells.splice(rowIndex, 1);
         rowElements.splice(rowIndex, 1);
+
+        onChange && onChange();
     };
     
     var cutColumn = function () {
@@ -88,6 +92,7 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
         }
         
         renderActiveCell();
+        onChange && onChange();
     };
     
     var initialize = function () {
@@ -233,14 +238,14 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
         return [x, y];
     }, function (direction) {
         movements[direction]();
-        infoDirection.innerHTML = direction;
+        directionElement.innerHTML = direction;
     });
     
     var setCellFunc = function (rune) {
         return function () {
-            console.log("Set cell " + rune);
             cells[y][x].innerHTML = rune; //.childNodes[0].nodeValue = rune;
             nextMove();
+            onChange && onChange();
         };
     };
     
@@ -267,6 +272,7 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
                 cell.innerHTML = NBSP;
             });
         });
+        onChange && onChange();
     };
     
     var thunk = function (f) {
@@ -295,6 +301,8 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
             yy++;
             xx = x;
         });
+
+        onChange && onChange();
     };
     
     var crop = function () {
@@ -434,9 +442,11 @@ ropy.editor = function (containerElement, dimElement, directionElement, tokenEle
             } else if (e.code == 'Backspace') {
                 movements.left();
                 cells[y][x].innerHTML = '\u00A0';
+                onChange && onChange();
                 e.preventDefault();
             } else if (e.code == 'Delete') {
                 cells[y][x].innerHTML = '\u00A0';
+                onChange && onChange();
                 e.preventDefault();
             } else if (specialHandlingKeys.includes(e.key)) {
                 setCellFunc(e.key)();
