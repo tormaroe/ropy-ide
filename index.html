@@ -18,9 +18,16 @@
     </div>
     
     <div id="openDialog" class="modal" style="display: none">
+        <h2 class="color-yellow">Open program</h2>
+        <p><i>Click any program title to load it. To open a program from somewhere else you need to use the paste feature.</i></p>
         <p><strong style="color: #CBCB41;">EXAMPLE PROGRAMS:</strong></p>
-        <p><i>Click to load..</i></p>
         <ul id="examplePrograms"></ul>
+        <p><strong style="color: #CBCB41;">EXERCISES:</strong></p>
+        <p>The exercises contain tests which you will have to write and run a Ropy program in order to make pass.</p>
+        <ul id="exercises"></ul>
+        <p><strong style="color: #CBCB41;">GAMES:</strong></p>
+        <p>You need to tweak these programs in order to pass a particulart test. Your goal is to do it with as few changes as possible.</p>
+        <ul id="games"></ul>
     </div>
     
     <div id="clipboard" class="modal" style="display: none">
@@ -189,10 +196,10 @@
         <div class="centerDiv">
             <div style="margin-bottom:4px;">
                 <div style="float:right;margin-top:8px;">
-                    <span class="toolbar-info" id="infoDirection">right</span>
                     <span class="toolbar-info" id="infoCurrentPos">0,0</span>
-                    <span class="toolbar-info" id="infoDimensions">dim</span>
                     <span class="toolbar-info" id="infoToken"></span>
+                    <span class="toolbar-info" id="infoDirection">right</span>
+                    <span class="toolbar-info" id="infoDimensions">dim</span>
                 </div>
                 <button class="button" id="openButton"><i class="fa fa-folder-open button-icon color-blue" aria-hidden="true"></i>Open</button>
                 <button class="button" id="saveButton"><i class="fa fa-floppy-o button-icon color-blue" aria-hidden="true"></i>Save</button>
@@ -210,12 +217,12 @@
         <div class="centerDiv">
             <div style="margin-bottom:4px;">
                 <button class="button" id="closeDebuggerButton"><i class="fa fa-window-close button-icon color-orange" aria-hidden="true"></i>Exit debugger</button>
-                <button class="button" id="rewindDebuggerButton"><i class="fa fa-fast-backward button-icon color-yellow" aria-hidden="true"></i></button>
-                <button class="button" id="pauseDebuggerButton"><i class="fa fa-pause button-icon color-yellow" aria-hidden="true"></i></button>
-                <button class="button" id="runDebuggerButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i></button>
-                <button class="button" id="stepDebuggerButton"><i class="fa fa-step-forward button-icon color-yellow" aria-hidden="true"></i></button>
-                <button class="button" id="speedUpButton"><i class="fa fa-fighter-jet button-icon color-yellow" aria-hidden="true"></i></button>
-                <button class="button" id="speedDownButton"><i class="fa fa-snowflake-o button-icon color-yellow" aria-hidden="true"></i></button>
+                <button class="button" id="rewindDebuggerButton"><i class="fa fa-fast-backward button-icon color-yellow" aria-hidden="true"></i>Rewind</button>
+                <button class="button" id="pauseDebuggerButton"><i class="fa fa-pause button-icon color-yellow" aria-hidden="true"></i>Pause</button>
+                <button class="button" id="runDebuggerButton"><i class="fa fa-play button-icon color-yellow" aria-hidden="true"></i>Play</button>
+                <button class="button" id="stepDebuggerButton"><i class="fa fa-step-forward button-icon color-yellow" aria-hidden="true"></i>Step</button>
+                <button class="button" id="speedUpButton"><i class="fa fa-fighter-jet button-icon color-blue" aria-hidden="true"></i>Faster</button>
+                <button class="button" id="speedDownButton"><i class="fa fa-snowflake-o button-icon color-blue" aria-hidden="true"></i>Slower</button>
             </div>
             
             <div class="container block-formatting-context">
@@ -244,6 +251,12 @@
                         <tr>
                             <td style="padding-bottom:8px;">Program done</td>
                             <td style="text-align:right" id="isDone">?</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:8px;" colspan=2 class="tdSectionStart">
+                                Output
+                                <div id="output"></div>
+                            </td>
                         </tr>
                         <tr>
                             <td style="padding-bottom:8px;" colspan=2 class="tdSectionStart">
