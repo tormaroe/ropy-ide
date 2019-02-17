@@ -17,6 +17,7 @@ ropy.tokenShortDescription = function (token) {
         case '#': return 'PRINT (#)';
         case '&': return 'JOIN NUMBERS (&)';
         case '!': return 'NOT (!)';
+        case "'": return "STRINGIFY ONE (')";
         case '"': return 'STRINGIFY (")';
         case '[': return 'STORE ([)';
         case ']': return 'LOAD (])';
@@ -237,6 +238,10 @@ ropy.core = (function () {
         state.print(pop(state));
     }
     
+    var stringify_one = function (state) {
+        push(state, String.fromCharCode(parseInt(pop(state))));
+    };
+
     var stringify_stack = function (state) {
         var s = '';
         while (state.stack.length > 0) {
@@ -247,8 +252,8 @@ ropy.core = (function () {
 
     var callsub = function (state) {
         state.return_stack.push([state.j, state.i, state.prev_direction]);
-        state.j = pop(state);
-        state.i = pop(state);
+        state.j = parseInt(pop(state));
+        state.i = parseInt(pop(state));
     };
 
     var returnsub = function (state) {
@@ -284,6 +289,9 @@ ropy.core = (function () {
                 break;
                 case '>':
                 duplicate(state);
+                break;
+                case "'":
+                stringify_one(state);
                 break;
                 case '"':
                 stringify_stack(state);
