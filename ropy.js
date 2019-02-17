@@ -148,8 +148,8 @@ ropy.core = (function () {
                 }
             }
             
-            if (result(state) === 0) {
-                for (var i = (came_from_index + 7); i <= (came_from_index - 1); i--) {
+            if (result(state) == 0) { // May be string "0"
+                for (var i = (came_from_index + 7); i >= (came_from_index - 1); i--) {
                     var ii = i % 8;
                     if (neighbors[ii][1] != undefined) {
                         move(state, neighbors[ii][0]);
