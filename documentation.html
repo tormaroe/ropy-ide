@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ROPY Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="css/flowtime.css">
+    <link rel="stylesheet" href="css/themes/default.css">
+    <link rel="stylesheet" href="ropyeditor.css">
+</head>
+<body style="margin: 0px">
+    <div class="flowtime">
+        <div class="ft-section">
+            <div class="ft-page" style="text-align:center">
+                <h1>ROPY Documentation</h1>
+            </div>
+        </div>
+        <div class="ft-section" data-id="numerical-operations">
+            <div class="ft-page">
+                <h1>Numerical operations</h1>
+                <ul>
+                    <li><a href="#/numerical-operations/command-add">ADD (+)</a></li>
+                    <li><a href="#/numerical-operations/command-subtract">SUBTRACT (-)</a></li>
+                    <li><a href="#/numerical-operations/command-multiply">MULTIPLY (*)</a></li>
+                    <li><a href="#/numerical-operations/command-divide">DIVIDE (/)</a></li>
+                    <li><a href="#/numerical-operations/command-modulo">MODULO (%)</a></li>
+                </ul>
+            </div>
+            <div class="ft-page" data-id="command-add">
+                <h1>ADD</h1>
+                <p>
+                    Command symbol: <bold>+</bold>
+                </p>
+                <p>
+                    Numerical operation; adds two numbers together and pushes the result on the stack.
+                </p>
+                <p>
+                    Stack effect: ( n n -- n )
+                </p>
+                <p>
+                    Example: <code>45+  ==> 9</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-subtract">
+                <h1>SUBTRACT</h1>
+                <p>
+                    Command symbol: <bold>-</bold>
+                </p>
+                <p>
+                    Numerical operation; 
+                    if the top element on the stack is a number <em>A</em>
+                    and the next element is a number <em>B</em>, 
+                    pushes the result of subtracting B from A on the stack.
+                </p>
+                <p>
+                    Stack effect: ( n n -- n )
+                </p>
+                <p>
+                    Example: <code>26-  ==> 4</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-multiply">
+                <h1>MULTIPLY</h1>
+                <p>
+                    Command symbol: <bold>*</bold>
+                </p>
+                <p>
+                    Numerical operation; multiplies two numbers and pushes the result on the stack.
+                </p>
+                <p>
+                    Stack effect: ( n n -- n )
+                </p>
+                <p>
+                    Example: <code>45*  ==> 20</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-divide">
+                <h1>DIVIDE</h1>
+                <p>
+                    Command symbol: <bold>/</bold>
+                </p>
+                <p>
+                    Numerical operation; 
+                    if the top element on the stack is a number <em>A</em>
+                    and the next element is a number <em>B</em>, 
+                    pushes the result of A divided by B on the stack.
+                </p>
+                <p>
+                    Stack effect: ( n n -- n )
+                </p>
+                <p>
+                    Example: <code>28/  ==> 4</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-modulo">
+                <h1>MODULO</h1>
+                <p>
+                    Command symbol: <bold>%</bold>
+                </p>
+                <p>
+                    Numerical operation; 
+                    if the top element on the stack is a number <em>A</em> (the dividend)
+                    and the next element is a number <em>B</em> (the devisor), 
+                    pushes the remainder of the Euclidean division of A by N on the stack.
+                </p>
+                <p>
+                    Stack effect: ( n n -- n )
+                </p>
+                <p>
+                    Example: <code>48%  ==> 0</code>
+                </p>
+                <p>
+                    Example 2: <code>38%  ==> 2</code>
+                </p>
+            </div>
+        </div>
+        
+        <div class="ft-section" data-id="stack-operations">
+            <div class="ft-page">
+                <h1>Stack operations</h1>
+                <ul>
+                    <li><a href="#/numerical-operations/command-swap">SWAP (&lt;)</a></li>
+                    <li><a href="#/numerical-operations/command-duplicate">DUPLICATE (&gt;)</a></li>
+                    <li><a href="#/numerical-operations/command-pop">POP (?)</a></li>
+                </ul>
+            </div>
+            <div class="ft-page" data-id="command-swap">
+                <h1>SWAP</h1>
+                <p>
+                    Command symbol: <bold>&lt;</bold>
+                </p>
+                <p>
+                    Stack operation; Swaps the two topmost elements on the stack.
+                </p>
+                <p>
+                    Stack effect: ( a b -- b a )
+                </p>
+                <p>
+                    Example: <code>52&lt;-  ==> 3</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-duplicate">
+                <h1>DUPLICATE</h1>
+                <p>
+                    Command symbol: <bold>&gt;</bold>
+                </p>
+                <p>
+                    Stack operation; Copies the topmost element and pushes it on the stack.
+                </p>
+                <p>
+                    Stack effect: ( a -- a a )
+                </p>
+                <p>
+                    Example: <code>2&gt;+  ==> 4</code>
+                </p>
+            </div>
+            <div class="ft-page" data-id="command-pop">
+                <h1>POP</h1>
+                <p>
+                    Command symbol: <bold>?</bold>
+                </p>
+                <p>
+                    Stack operation; Pops the topmost element off the stack.
+                </p>
+                <p>
+                    Stack effect: ( a -- )
+                </p>
+                <p>
+                    Example: <code>23?  ==> 2</code>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="js/flowtime.min.js"></script>
+    <script>
+        Flowtime.showProgress(true);
+    </script>
+</body>
+</html>
