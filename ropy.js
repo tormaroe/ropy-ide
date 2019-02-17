@@ -23,6 +23,7 @@ ropy.tokenShortDescription = function (token) {
         case ']': return 'LOAD (])';
         case ':': return 'CALL (:)';
         case ';': return 'RETURN (;)';
+        case '$': return 'GOTO ($)';
     }
 
     return token;
@@ -250,10 +251,14 @@ ropy.core = (function () {
         push(state, s);
     };
 
-    var callsub = function (state) {
-        state.return_stack.push([state.j, state.i, state.prev_direction]);
+    var _goto = function (state) {
         state.j = parseInt(pop(state));
         state.i = parseInt(pop(state));
+    }
+
+    var callsub = function (state) {
+        state.return_stack.push([state.j, state.i, state.prev_direction]);
+        _goto(state);
     };
 
     var returnsub = function (state) {
@@ -319,6 +324,9 @@ ropy.core = (function () {
                 break;
                 case ';':
                 returnsub(state);
+                break;
+                case '$':
+                _goto(state);
                 break;
             }
         }

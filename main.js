@@ -120,7 +120,8 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
         { title: 'Solution to Euler Problem #1', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/euler1.ropy'},
         { title: 'FizzBuzz by Steffen Hageland', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/fizzbuzz.ropy'},
         { title: 'Reverse Stack by Steffen Hageland', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/reverse_stack.ropy'},
-        { title: 'Birthday Cake by Stian Eikeland', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/birthday_cake.ropy' }
+        { title: 'Birthday Cake by Stian Eikeland', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/birthday_cake.ropy' },
+        { title: 'Fibonacci', url: 'https://raw.githubusercontent.com/tormaroe/ropy/master/examples/fibonacci.ropy2' }
     ];
     var exampleProgramsElm = document.getElementById('examplePrograms');
     examplePrograms.forEach(x => {
