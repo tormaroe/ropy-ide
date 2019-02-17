@@ -47,10 +47,20 @@ ropy.debugger = function (elements) {
 
     var loadGrid = function (grid) {
         program = ropy.core.make_program_object(grid);
+        program.print = printProgramOutput;
+        clearProgramOutput();
         clearGrid();
         expandGrid();
         loadTokens();
         renderState();
+    };
+
+    var clearProgramOutput = function () {
+        elements.output.innerText = "";
+    };
+
+    var printProgramOutput = function (data) {
+        elements.output.innerText += data;
     };
 
     var renderState = function () {

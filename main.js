@@ -40,7 +40,8 @@ ropy.toggleDocumentation = ropy.makeToggler('documentation');
         currentDirection: document.getElementById('currentDirection'),
         isDone: document.getElementById('isDone'),
         dataStack: document.getElementById('dataStack'),
-        memory: document.getElementById('memory')
+        memory: document.getElementById('memory'),
+        output: document.getElementById('output')
     });
     
     /*
