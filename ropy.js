@@ -20,6 +20,8 @@ ropy.tokenShortDescription = function (token) {
         case '"': return 'STRINGIFY (")';
         case '[': return 'STORE ([)';
         case ']': return 'LOAD (])';
+        case ':': return 'CALL (:)';
+        case ';': return 'RETURN (;)';
     }
 
     return token;
@@ -46,6 +48,7 @@ ropy.core = (function () {
     var make_program_object = function (source) {
         var state = {
             stack: [],
+            return_stack: [],
             memory: {},
             tokens: typeof(source) == 'string' ? tokenize(source) : source,
             i: 0,
@@ -241,6 +244,19 @@ ropy.core = (function () {
         }
         push(state, s);
     };
+
+    var callsub = function (state) {
+        state.return_stack.push([state.j, state.i, state.prev_direction]);
+        state.j = pop(state);
+        state.i = pop(state);
+    };
+
+    var returnsub = function (state) {
+        var location = state.return_stack.pop();
+        state.j = location[0];
+        state.i = location[1];
+        state.prev_direction = location[2];
+    };
     
     var evaluate = function (state) {
         var token = current(state);
@@ -289,6 +305,12 @@ ropy.core = (function () {
                 break;
                 case '#':
                 printit(state);
+                break;
+                case ':':
+                callsub(state);
+                break;
+                case ';':
+                returnsub(state);
                 break;
             }
         }

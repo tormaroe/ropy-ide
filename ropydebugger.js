@@ -87,6 +87,18 @@ ropy.debugger = function (elements) {
             stack.appendChild(document.createTextNode(' '));
         });
 
+        var returnStack = elements.returnStack;
+        while (returnStack.firstChild) {
+            returnStack.removeChild(returnStack.firstChild);
+        }
+        program.return_stack.forEach(x => {
+            var elm = document.createElement("span");
+            elm.className = 'stackElement';
+            elm.innerText = x.join("-");
+            returnStack.appendChild(elm);
+            returnStack.appendChild(document.createTextNode(' '));
+        });
+
         var memory = elements.memory;
         while (memory.firstChild) {
             memory.removeChild(memory.firstChild);
