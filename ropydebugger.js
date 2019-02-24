@@ -48,6 +48,9 @@ ropy.debugger = function (elements) {
     var loadGrid = function (grid) {
         program = ropy.core.make_program_object(grid);
         program.print = printProgramOutput;
+        ropy.core.setInputHandler(function () {
+            return window.prompt("Input requested");
+        });
         clearProgramOutput();
         clearGrid();
         expandGrid();

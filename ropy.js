@@ -24,6 +24,7 @@ ropy.tokenShortDescription = function (token) {
         case ':': return 'CALL (:)';
         case ';': return 'RETURN (;)';
         case '$': return 'GOTO ($)';
+        case '¤': return 'INPUT (¤)';
     }
 
     return token;
@@ -267,6 +268,15 @@ ropy.core = (function () {
         state.i = location[1];
         state.prev_direction = location[2];
     };
+
+    var inputHandler = function () {
+        return "input handler not set";
+    };
+
+    var getInput = function (state) {
+        var rawInput = inputHandler();
+        push(state, rawInput);
+    };
     
     var evaluate = function (state) {
         var token = current(state);
@@ -328,6 +338,9 @@ ropy.core = (function () {
                 case '$':
                 _goto(state);
                 break;
+                case '¤':
+                getInput(state);
+                break;
             }
         }
         move_next(state);
@@ -344,6 +357,9 @@ ropy.core = (function () {
         evaluate: evaluate,
         make_program_object: make_program_object,
         current: current,
-        tokenize: tokenize
+        tokenize: tokenize,
+        setInputHandler: function (callback) {
+            inputHandler = callback;
+        }
     };
 })();
